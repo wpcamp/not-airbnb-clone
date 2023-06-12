@@ -2,7 +2,7 @@
 const {
     Model
 } = require('sequelize');
-const { Spot, User } = require('../models')
+const { Spot, User, ReviewImage } = require('../models')
 
 module.exports = (sequelize, DataTypes) => {
     class Review extends Model {
@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
             })
             Review.belongsTo(models.User, {
                 foreignKey: 'userId'
+            })
+            Review.hasMany(models.ReviewImage, {
+                foreignKey: 'reviewId',
+                onDelete: 'CASCADE'
             })
         }
     }
