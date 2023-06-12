@@ -1,7 +1,7 @@
 'use strict';
 const { Model, Validator } = require('sequelize');
 
-const { Spot, Review } = require('../models')
+const { Spot, Review, Booking } = require('../models')
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE'
             })
             User.hasMany(models.Review, {
+                foreignKey: 'userId',
+                onDelete: 'CASCADE'
+            })
+            User.hasMany(models.Booking, {
                 foreignKey: 'userId',
                 onDelete: 'CASCADE'
             })

@@ -3,7 +3,7 @@ const {
     Model
 } = require('sequelize');
 
-const { User, SpotImage, Review } = require('../models')
+const { User, SpotImage, Review, Booking } = require('../models')
 
 module.exports = (sequelize, DataTypes) => {
     class Spot extends Model {
@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'CASCADE'
             })
             Spot.hasMany(models.Review, {
+                foreignKey: 'spotId',
+                onDelete: 'CASCADE'
+            })
+            Spot.hasMany(models.Booking, {
                 foreignKey: 'spotId',
                 onDelete: 'CASCADE'
             })
