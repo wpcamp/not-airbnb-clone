@@ -2,10 +2,13 @@
 
 /** @type {import('sequelize-cli').Migration} */
 let options = {};
+if (process.env.NODE_ENV === 'production') {
+    options.schema = process.env.SCHEMA; // define your schema in options object
+}
 module.exports = {
-    async up(queryInterface, Sequelize) {
+    up: async(queryInterface, Sequelize) => {
         options.tableName = 'Spots'
-        return queryInterface.bulkInsert(options, {
+        const spotData = [{
             ownerId: 1,
             address: '123 Main Street',
             city: 'Hanover',
@@ -15,9 +18,7 @@ module.exports = {
             lng: -167.012,
             name: 'Dartmouth Gym',
             description: 'Place to workout',
-            price: 25.00,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            price: 25.00
         }, {
             ownerId: 2,
             address: '123 Elm Street',
@@ -28,9 +29,7 @@ module.exports = {
             lng: 112.345,
             name: 'Carpenter and Main',
             description: 'Restaurant with poor food handling practices',
-            price: 150.5,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            price: 150.5
         }, {
             ownerId: 1,
             address: '89 Sedgemore Lane',
@@ -41,13 +40,14 @@ module.exports = {
             lng: 123.678,
             name: 'Ancestral Homeland',
             description: 'Nice home',
-            price: 300.0,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        })
+            price: 300.0
+        }]
+        return queryInterface.bulkInsert(options, spotData)
     },
 
-    async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('Spots')
+    down: async(queryInterface, Sequelize) => {
+        options.tableName = 'Spots';
+        const Op = Sequelize.Op;
+        return queryInterface.bulkDelete(options)
     }
 };

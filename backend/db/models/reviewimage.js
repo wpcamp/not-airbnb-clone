@@ -2,6 +2,8 @@
 const {
     Model
 } = require('sequelize');
+
+const { Review } = require('../models')
 module.exports = (sequelize, DataTypes) => {
     class ReviewImage extends Model {
         static associate(models) {
@@ -21,13 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         createdAt: {
             allowNull: false,
-            type: DataTypes.DATE,
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            type: DataTypes.DATE
         },
         updatedAt: {
             allowNull: false,
-            type: DataTypes.DATE,
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            type: DataTypes.DATE
         }
     }, {
         sequelize,

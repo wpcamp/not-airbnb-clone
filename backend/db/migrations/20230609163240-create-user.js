@@ -1,6 +1,6 @@
 'use strict';
 
-const { sequelize } = require('../models');
+const { sequelize } = require('sequelize');
 
 /** @type {import('sequelize-cli').Migration} */
 
