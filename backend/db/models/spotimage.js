@@ -2,12 +2,16 @@
 const {
     Model
 } = require('sequelize');
-const { Spot } = require('../models')
+
 module.exports = (sequelize, DataTypes) => {
     class SpotImage extends Model {
         static associate(models) {
-            SpotImage.belongsTo(models.Spot, {
-                foreignKey: 'spotId'
+
+            const Spot = models.Spot
+
+            SpotImage.belongsTo(Spot, {
+                foreignKey: 'spotId',
+                onDelete: 'CASCADE'
             })
         }
     }

@@ -1,20 +1,25 @@
 'use strict';
 const { Model, Validator } = require('sequelize');
 
-const { Spot, Review, Booking } = require('../models')
+
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         static associate(models) {
-            User.hasMany(models.Spot, {
+
+            const Spot = models.Spot
+            const Review = models.Review
+            const Booking = models.Booking
+
+            User.hasMany(Spot, {
                 foreignKey: 'ownerId',
                 onDelete: 'CASCADE'
             })
-            User.hasMany(models.Review, {
+            User.hasMany(Review, {
                 foreignKey: 'userId',
                 onDelete: 'CASCADE'
             })
-            User.hasMany(models.Booking, {
+            User.hasMany(Booking, {
                 foreignKey: 'userId',
                 onDelete: 'CASCADE'
             })

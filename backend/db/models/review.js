@@ -2,18 +2,26 @@
 const {
     Model
 } = require('sequelize');
-const { Spot, User, ReviewImage } = require('../models')
+
 
 module.exports = (sequelize, DataTypes) => {
     class Review extends Model {
         static associate(models) {
-            Review.belongsTo(models.Spot, {
-                foreignKey: 'spotId'
+
+            const User = models.User
+            const Spot = models.Spot
+            const ReviewImage = models.ReviewImage
+
+
+            Review.belongsTo(Spot, {
+                foreignKey: 'spotId',
+                onDelete: 'CASCADE'
             })
-            Review.belongsTo(models.User, {
-                foreignKey: 'userId'
+            Review.belongsTo(User, {
+                foreignKey: 'userId',
+                onDelete: 'CASCADE'
             })
-            Review.hasMany(models.ReviewImage, {
+            Review.hasMany(ReviewImage, {
                 foreignKey: 'reviewId',
                 onDelete: 'CASCADE'
             })
