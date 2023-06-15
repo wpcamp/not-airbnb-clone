@@ -39,6 +39,34 @@ const validateReview = [
 ];
 
 
+//add an image to a review based on review id
+router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res) => {
+    const review = await Review.findByPk(req.params.reviewId)
+    if (!review) {
+        return res.status(404).json({ message: "Review couldn't be found" })
+    }
+
+    const totalReview = await ReviewImage.findAll({
+        where: {
+            reviewId: req.params.reviewId
+        }
+    })
+    console.log(totalReview.length)
+    if (totalReview.length > 9) {
+        return res.status(403).json({ message: 'Maximum number of images for this resource was reached' })
+    }
+    if (review.userId === req.user.id) {
+        const newImage = await ReviewImage.create({
+            reviewId: parseInt(review.id),
+            url: req.body.url
+        })
+        res.json({ id: newImage.id, url: newImage.url })
+    } else {
+        return res.status(404).json({ message: "Review couldn't be found" })
+    }
+})
+
+
 //get all reviews of the current user
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
     let reviews = await Review.findAll({

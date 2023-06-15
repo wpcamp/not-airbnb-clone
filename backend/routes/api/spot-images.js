@@ -1,4 +1,4 @@
-//backend/routes/api/spots.js
+//backend/routes/api/spot-images.js
 
 const express = require('express');
 
@@ -25,8 +25,7 @@ const validateSpotImage = [
 
 
 
-
-
+// delete an image for a spot
 router.delete('/:imageId', restoreUser, requireAuth, async(req, res) => {
     const spotImg = await SpotImage.findByPk(req.params.imageId)
     if (!spotImg) {
