@@ -5,7 +5,7 @@ let options = {};
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         options.tableName = 'Bookings'
-        const bookingData = [{
+        return queryInterface.bulkInsert(options, [{
             spotId: 1,
             userId: 1,
             startDate: new Date(),
@@ -20,10 +20,8 @@ module.exports = {
             userId: 1,
             startDate: new Date(),
             endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
-        }]
-        return queryInterface.bulkInsert(options, bookingData)
+        }], {})
     },
-
     down: async(queryInterface, Sequelize) => {
         options.tableName = 'Bookings'
         return queryInterface.bulkDelete(options)

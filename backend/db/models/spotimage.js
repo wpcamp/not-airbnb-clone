@@ -6,10 +6,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class SpotImage extends Model {
         static associate(models) {
-
-            const Spot = models.Spot
-
-            SpotImage.belongsTo(Spot, {
+            SpotImage.belongsTo(models.Spot, {
                 foreignKey: 'spotId',
                 onDelete: 'CASCADE'
             })

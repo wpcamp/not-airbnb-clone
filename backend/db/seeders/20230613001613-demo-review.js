@@ -5,7 +5,7 @@ let options = {};
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         options.tableName = 'Reviews';
-        const reviewData = [{
+        return queryInterface.bulkInsert(options, [{
                 spotId: 1,
                 userId: 1,
                 review: 'Good gym, nice squash courts',
@@ -37,8 +37,7 @@ module.exports = {
                 review: 'Love it',
                 stars: 4
             }
-        ]
-        return queryInterface.bulkInsert(options, reviewData)
+        ], {})
     },
     down: async(queryInterface, Sequelize) => {
         options.tableName = 'Reviews';

@@ -5,7 +5,7 @@ let options = {};
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         options.tableName = 'SpotImages'
-        const spotImgData = [{
+        return queryInterface.bulkInsert(options, [{
                 spotId: 1,
                 url: 'dartmouth.edu/spot1/image',
                 preview: true
@@ -20,10 +20,8 @@ module.exports = {
                 url: 'instagram.com/spot3/image',
                 preview: true
             }
-        ]
-        return queryInterface.bulkInsert(options, spotImgData)
+        ], {})
     },
-
     down: async(queryInterface, Sequelize) => {
         options.tableName = 'SpotImages'
         return queryInterface.bulkDelete(options)

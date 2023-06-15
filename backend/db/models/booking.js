@@ -3,20 +3,14 @@ const {
     Model
 } = require('sequelize');
 
-
-
 module.exports = (sequelize, DataTypes) => {
     class Booking extends Model {
         static associate(models) {
-
-            const User = models.User
-            const Spot = models.Spot
-
-            Booking.belongsTo(User, {
+            Booking.belongsTo(models.User, {
                 foreignKey: 'userId',
                 onDelete: 'CASCADE'
             })
-            Booking.belongsTo(Spot, {
+            Booking.belongsTo(models.Spot, {
                 foreignKey: 'spotId',
                 onDelete: 'CASCADE'
             })
