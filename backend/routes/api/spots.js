@@ -81,6 +81,7 @@ router.get('/current', requireAuth, async(req, res) => {
         ]
     })
     const avgStarSpot = []
+        // loop through each spot, get stars
     for (const spot of allSpots) {
         const spotId = spot.id
         const reviews = await Review.findAll({
@@ -103,23 +104,19 @@ router.get('/current', requireAuth, async(req, res) => {
             avgStar = sum / reviewCount
         }
         const spotImages = await SpotImage.findAll({
-            where: {
-                spotId: spotId
-            }
-        })
-
-        //THIS ASSUME ONE IMAGE/URL PER SPOT SUBJECT TO CHANGE 
+                where: {
+                    spotId: spotId
+                }
+            })
+            //THIS ASSUME ONE IMAGE/URL PER SPOT SUBJECT TO CHANGE 
         let previewImage = spotImages[0] !== undefined ? spotImages[0].url : 0
-            // let previewImage = spotImages[0].url
-            // if (previewImage === undefined) previewImage = null
-
-        //spread in the results and append avgStar/previewImage cols 
+            //spread in the results and append avgStar/previewImage cols 
         const spotWithAvgStar = {
             ...spot.toJSON(),
             avgStar: avgStar,
             previewImage: previewImage
         };
-        //push the result above into the array (fixes not iterable error)
+        //push the result above into the array (fixes not iterable error?)
         avgStarSpot.push(spotWithAvgStar);
     }
     res.json(avgStarSpot)
@@ -145,7 +142,6 @@ router.get('/:spotId/reviews', async(req, res) => {
     if (!allReviews.length) {
         return res.status(404).json({ message: "Spot couldn't be found" });
     }
-
     res.json(allReviews)
 })
 
@@ -174,6 +170,7 @@ router.get('/:spotId', async(req, res) => {
             spotId: req.params.spotId
         }
     });
+    //calculate total number of reviews
     let reviewNum = 0
     totalIndvReview.forEach(ele => {
         reviewNum++
@@ -190,6 +187,7 @@ router.get('/:spotId', async(req, res) => {
     if (reviewCount > 0) {
         avgStar = sum / reviewCount
     }
+    //spread in results and append numReviews/avgStar
     const spotIdResponse = {
         ...spot.toJSON(),
         numReviews: reviewNum,
@@ -198,7 +196,7 @@ router.get('/:spotId', async(req, res) => {
     res.json(spotIdResponse)
 })
 
-//get all spots + aggregate data (avgStars + numReview)
+//get all spots
 router.get('', async(req, res) => {
     const allSpots = await Spot.findAll({
         attributes: [
@@ -236,8 +234,6 @@ router.get('', async(req, res) => {
         }
         //THIS ASSUME ONE IMAGE/URL PER SPOT SUBJECT TO CHANGE 
         let previewImage = spotImages[0] !== undefined ? spotImages[0].url : 0
-            // let previewImage = spotImages[0].url
-            // if (previewImage === undefined) previewImage = null
 
         //spread in the results and append avgStar/previewImage cols 
         const spotWithAvgStar = {
@@ -245,18 +241,31 @@ router.get('', async(req, res) => {
             previewImage: previewImage,
             avgStar: avgStar
         };
-        //push the result above into the array (fixes not iterable error)
+        //push the result above into the array (fixes not iterable error?)
         allSpotsWithAvgStar.push(spotWithAvgStar);
     }
     res.json(allSpotsWithAvgStar);
 })
 
 //create a review for a spot based on spotId
-router.post('/:spotId/reviews', restoreUser, requireAuth, async(req, res) => {
+router.post('/:spotId/reviews', requireAuth, async(req, res) => {
     const spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
+    //check to see if user has already made a review for this spot
+    const userReviews = await Review.findAll({
+        where: {
+            userId: req.user.id,
+            spotId: req.params.spotId
+        }
+    })
+
+    //if there are any reviews throw error
+    if (userReviews.length > 0) {
+        return res.status(500).json({ message: 'User already has a review for this spot' })
+    }
+    //create new review
     const createdReview = await Review.create({
         userId: req.user.id,
         spotId: parseInt(req.params.spotId),
@@ -265,15 +274,6 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, async(req, res) => {
         createdAt: new Date(),
         updatedAt: new Date()
     })
-    const userReviews = await Review.findAll({
-        where: {
-            userId: req.user.id,
-            spotId: req.params.spotId
-        }
-    })
-    if (userReviews) {
-        return res.status(500).json({ message: 'User already has a review for this spot' })
-    }
     return res.json({ createdReview })
 })
 
