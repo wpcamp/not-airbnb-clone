@@ -7,21 +7,15 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class Review extends Model {
         static associate(models) {
-
-            const User = models.User
-            const Spot = models.Spot
-            const ReviewImage = models.ReviewImage
-
-
-            Review.belongsTo(Spot, {
+            Review.belongsTo(models.Spot, {
                 foreignKey: 'spotId',
                 onDelete: 'CASCADE'
             })
-            Review.belongsTo(User, {
+            Review.belongsTo(models.User, {
                 foreignKey: 'userId',
                 onDelete: 'CASCADE'
             })
-            Review.hasMany(ReviewImage, {
+            Review.hasMany(models.ReviewImage, {
                 foreignKey: 'reviewId',
                 onDelete: 'CASCADE'
             })
