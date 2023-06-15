@@ -3,7 +3,7 @@ const express = require('express');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const { check } = require('express-validator');
@@ -20,13 +20,13 @@ const validateLogin = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide a password.'),
     handleValidationErrors
-];
+]
 
 
 
 // Restore session user
 router.get(
-    '/',
+    '/', requireAuth,
     (req, res) => {
         const { user } = req;
         if (user) {
