@@ -1,18 +1,11 @@
 //backend/routes/api/reviews.js
-
 const express = require('express');
-
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
-
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-
 const { requireAuth } = require('../../utils/auth')
-
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
 const router = express.Router();
-
 
 const validateReview = [
     check('spotId')
@@ -25,33 +18,62 @@ const validateReview = [
     .exists({ checkFalsy: true }),
     check('review')
     .notEmpty()
-    .withMessage('Must write a review')
+    .withMessage('Review text is required')
     .exists({ checkFalsy: true })
-    .isLength({ min: 1, max: 3000 })
-    .withMessage('Review must be less than 3000 characters')
+    .isLength({ min: 1, max: 500 })
+    .withMessage('Review must be less than 500 characters')
     .isString()
     .withMessage('Review must be a string'),
     check('stars')
     .notEmpty()
     .withMessage('Must give star rating')
-    .exists({ checkFalsy: true }),
+    .isInt({ min: 0, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5.")
+    .exists({ checkFalsy: true })
+    .withMessage("Must give a star rating"),
+    handleValidationErrors
+];
+
+const validateEditReview = [
+    check('review')
+    .notEmpty()
+    .withMessage('Review text is required')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 500 })
+    .withMessage('Review must be less than 500 characters')
+    .isString()
+    .withMessage('Review must be a string'),
+    check('stars')
+    .notEmpty()
+    .withMessage('Must give star rating')
+    .isInt({ min: 0, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5.")
+    .exists({ checkFalsy: true })
+    .withMessage("Must give a star rating"),
+    handleValidationErrors
+]
+
+const validateReviewImage = [
+    check('url')
+    .exists({ checkFalsy: true })
+    .withMessage("Must provide a valid URL")
+    .isURL()
+    .withMessage("Must be a valid URL"),
     handleValidationErrors
 ];
 
 
 //add an image to a review based on review id
-router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res) => {
+router.post('/:reviewId/images', requireAuth, validateReviewImage, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId)
     if (!review) {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
-
     const totalReview = await ReviewImage.findAll({
         where: {
             reviewId: req.params.reviewId
         }
     })
-    console.log(totalReview.length)
     if (totalReview.length > 9) {
         return res.status(403).json({ message: 'Maximum number of images for this resource was reached' })
     }
@@ -60,7 +82,7 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res) => {
             reviewId: parseInt(review.id),
             url: req.body.url
         })
-        res.json({ id: newImage.id, url: newImage.url })
+        return res.json({ id: newImage.id, url: newImage.url })
     } else {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
@@ -69,6 +91,7 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async(req, res) => {
 
 //get all reviews of the current user
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
+    //need to fix nesting so it follows API docs REVIEW
     let reviews = await Review.findAll({
         where: {
             userId: req.user.id
@@ -99,40 +122,35 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
     })
 
     if (reviews[0].userId === req.user.id) {
-        res.json(reviews)
+        return res.json(reviews)
     } else {
-        res.status(400).json({ message: "Reviews couldn't be found" })
+        return res.status(400).json({ message: "Reviews couldn't be found" })
     }
 })
 
-//edit a spot by id
-router.put('/:reviewId', requireAuth, async(req, res) => {
+//Edit a Review
+router.put('/:reviewId', requireAuth, validateEditReview, async(req, res) => {
     let review = await Review.findByPk(req.params.reviewId)
     if (!review) {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
-
     if (req.user.id === review.userId) {
-
         if (req.body.review) {
             review.review = req.body.review
         }
-
         if (req.body.stars) {
             review.stars = req.body.stars
         }
-
         review.updatedAt = new Date()
 
         await review.save()
-        res.json(review)
-
+        return res.json(review)
     } else {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
 })
 
-
+//delete review by id
 router.delete('/:reviewId', requireAuth, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId)
     if (!review) {
@@ -143,29 +161,11 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
     })
     if (spot.ownerId === req.user.id) {
         review.destroy()
-        res.json({
-            message: 'Successfully deleted'
-        })
+        return res.json({ message: 'Successfully deleted' })
     } else {
         return res.status(404).json({ message: "Review couldn't be found" })
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
