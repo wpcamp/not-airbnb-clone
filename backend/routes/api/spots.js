@@ -473,6 +473,7 @@ router.post(
 );
 
 //edit a spot by id
+//idea: user shouldn't be able to leave review for a spot they own 
 router.put('/:spotId', requireAuth, validateSpot, async(req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
@@ -585,9 +586,6 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
         updatedAt: new Date()
     })
 
-    if (!spot) {
-        return res.status(404).json({ message: "Spot couldn't be found" })
-    }
     if (req.user.id === spot.ownerId) {
         return res.status(400).json({ message: "You cannot book a spot you own" })
     }
