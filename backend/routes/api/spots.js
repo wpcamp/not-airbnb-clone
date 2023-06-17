@@ -526,7 +526,7 @@ router.delete('/:spotId', requireAuth, async(req, res) => {
         return res.status(404).json({ message: "Spot couldn't be found" });
     }
     if (spot.ownerId === req.user.id) {
-        spot.destroy()
+        await spot.destroy()
         res.json({
             message: 'Successfully deleted'
         })
@@ -568,7 +568,14 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
 router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
-    const previousBooking = await Booking.findByPk(req.params.spotId)
+    if (!spot) {
+        return res.status(404).json({ message: "Spot couldn't be found" })
+    }
+    const previousBooking = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
     const booking = await Booking.create({
         spotId: parseInt(req.params.spotId),
         userId: req.user.id,
@@ -577,6 +584,7 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
         createdAt: new Date(),
         updatedAt: new Date()
     })
+
     if (!spot) {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
@@ -592,9 +600,9 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
             }
         })
     }
-    if (req.user.id !== spot.ownerId) {
-        return res.json(booking)
-    }
+
+    return res.json(booking)
+
 })
 
 

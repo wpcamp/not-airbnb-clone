@@ -113,7 +113,7 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
         return
     }
     if (booking.ownerId === req.user.id || booking.userId === req.user.id) {
-        booking.destroy()
+        await booking.destroy()
         res.json({ message: "Successfully deleted" })
     } else {
         res.status(404).json({ message: "Booking can't be found" })
