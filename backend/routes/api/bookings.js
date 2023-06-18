@@ -3,55 +3,8 @@ const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../d
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { requireAuth } = require('../../utils/auth')
 const { Op } = require('sequelize');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { validateBookings } = require('../../utils/validators')
 const router = express.Router();
-
-const validateBookings = [
-    check('startDate')
-    .exists({ checkFalsy: true })
-    .withMessage('Must provide a valid date')
-    .notEmpty()
-    .withMessage('Must provide a valid date')
-    .custom((value, { req }) => {
-        let currDate = new Date();
-        let startDate = req.body.startDate;
-        if (currDate > startDate) {
-            throw new Error("Start date has already passed");
-        }
-        return true;
-    })
-    .custom((value, { req }) => {
-        let startDate = req.body.startDate;
-        let dateFormat = startDate.toString().split("-");
-        if (dateFormat.length !== 3) {
-            throw new Error("Please provide date in YYYY-MM-DD format");
-        }
-        return true;
-    }),
-    check('endDate')
-    .exists({ checkFalsy: true })
-    .withMessage('Must provide a valid date')
-    .notEmpty()
-    .withMessage('Must provide a valid date')
-    .custom((value, { req }) => {
-        let endDate = req.body.endDate;
-        let startDate = req.body.startDate;
-        if (startDate > endDate) {
-            throw new Error("End date cannot come before start date");
-        }
-        return true;
-    })
-    .custom((value, { req }) => {
-        let endDate = req.body.endDate;
-        let dateFormat = endDate.toString().split("-");
-        if (dateFormat.length !== 3) {
-            throw new Error("Please provide date in YYYY-MM-DD format");
-        }
-        return true;
-    }),
-    handleValidationErrors
-];
 
 // get all bookings of current user
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
@@ -76,7 +29,7 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
         });
         // set previewimage = spotimages url, always in the 1st index  - else false
         const previewImage = spotImages[0] !== undefined ? spotImages[0].url : 0;
-        //make date into string, split and take everything before the T to truncate the date to just be YYYY-MM-DD
+        //make date into string, split and take everything before the T to truncate the date -- not working REVIEW
         const startDatStringSplit = booking.startDate.toISOString().split('T')[0]
         const startDate = new Date(startDatStringSplit)
         const endDateStringSplit = booking.endDate.toISOString().split('T')[0]
@@ -92,33 +45,6 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
         bookingWImg.push(bookingObj);
     }
     res.json(bookingWImg);
-})
-
-
-//delete a booking
-router.delete('/:bookingId', requireAuth, async(req, res) => {
-    const booking = await Booking.findByPk(req.params.bookingId, {
-        include: [{
-            model: Spot,
-            attributes: ['ownerId']
-        }]
-    })
-    if (!booking) {
-        res.status(404).json({ message: "Booking can't be found" })
-        return
-    }
-    const currDate = new Date()
-    if (booking.startDate < currDate) {
-        res.status(403).json({ message: "Bookings that have been started can't be deleted" })
-        return
-    }
-    if (booking.ownerId === req.user.id || booking.userId === req.user.id) {
-        await booking.destroy()
-        res.json({ message: "Successfully deleted" })
-    } else {
-        res.status(404).json({ message: "Booking can't be found" })
-        return
-    }
 })
 
 //edit a booking
@@ -146,14 +72,10 @@ router.put('/:bookingId', requireAuth, validateBookings, async(req, res) => {
     if (booking.endDate < currDate) {
         return res.status(403).json({ message: "Past bookings can't be modified" })
     }
-    for (const prevBooking of previousBooking) {
-        //this validation doesn't seem to work correctly REVIEW
-        if (
-            (booking.startDate >= prevBooking.startDate &&
-                booking.startDate <= prevBooking.endDate) ||
-            (booking.endDate >= prevBooking.startDate &&
-                booking.endDate <= prevBooking.endDate)
-        ) {
+    for (const indBooking of previousBooking) {
+        if ((booking.startDate >= indBooking.startDate && booking.startDate <= indBooking.endDate) ||
+            (booking.endDate >= indBooking.startDate && booking.endDate <= indBooking.endDate) ||
+            (booking.startDate <= indBooking.startDate && booking.endDate >= indBooking.endDate)) {
             return res.status(403).json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 errors: {
@@ -174,6 +96,32 @@ router.put('/:bookingId', requireAuth, validateBookings, async(req, res) => {
     }
     await booking.save()
     res.json(booking)
+})
+
+//delete a booking
+router.delete('/:bookingId', requireAuth, async(req, res) => {
+    const booking = await Booking.findByPk(req.params.bookingId, {
+        include: [{
+            model: Spot,
+            attributes: ['ownerId']
+        }]
+    })
+    if (!booking) {
+        res.status(404).json({ message: "Booking can't be found" })
+        return
+    }
+    const currDate = new Date()
+    if (booking.startDate < currDate) {
+        res.status(403).json({ message: "Bookings that have been started can't be deleted" })
+        return
+    }
+    if (booking.ownerId === req.user.id || booking.userId === req.user.id) {
+        await booking.destroy()
+        res.json({ message: "Successfully deleted" })
+    } else {
+        res.status(404).json({ message: "Booking can't be found" })
+        return
+    }
 })
 
 

@@ -6,64 +6,9 @@ const { requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+const { validateReview, validateEditReview, validateReviewImage } = require('../../utils/validators')
 
-const validateReview = [
-    check('spotId')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Must have valid spotId'),
-    check('userId')
-    .notEmpty()
-    .withMessage('Must have valid userId')
-    .exists({ checkFalsy: true }),
-    check('review')
-    .notEmpty()
-    .withMessage('Review text is required')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 1, max: 500 })
-    .withMessage('Review must be less than 500 characters')
-    .isString()
-    .withMessage('Review must be a string'),
-    check('stars')
-    .notEmpty()
-    .withMessage('Must give star rating')
-    .isInt({ min: 0, max: 5 })
-    .withMessage("Stars must be an integer from 1 to 5.")
-    .exists({ checkFalsy: true })
-    .withMessage("Must give a star rating"),
-    handleValidationErrors
-];
-
-const validateEditReview = [
-    check('review')
-    .notEmpty()
-    .withMessage('Review text is required')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 1, max: 500 })
-    .withMessage('Review must be less than 500 characters')
-    .isString()
-    .withMessage('Review must be a string'),
-    check('stars')
-    .notEmpty()
-    .withMessage('Must give star rating')
-    .isInt({ min: 0, max: 5 })
-    .withMessage("Stars must be an integer from 1 to 5.")
-    .exists({ checkFalsy: true })
-    .withMessage("Must give a star rating"),
-    handleValidationErrors
-]
-
-const validateReviewImage = [
-    check('url')
-    .exists({ checkFalsy: true })
-    .withMessage("Must provide a valid URL")
-    .isURL()
-    .withMessage("Must be a valid URL"),
-    handleValidationErrors
-];
-
-
-//add an image to a review based on review id
+//Add an image to a Review
 router.post('/:reviewId/images', requireAuth, validateReviewImage, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId)
     if (!review) {
@@ -88,8 +33,7 @@ router.post('/:reviewId/images', requireAuth, validateReviewImage, async(req, re
     }
 })
 
-
-//get all reviews of the current user
+//Get all reviews of Current User
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
     const reviews = await Review.findAll({
         where: {
@@ -114,26 +58,21 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
             }
         ]
     });
-    // can't use same method as for previewImg on Spot - can't key into attrs the same - manual? 
     const reviewArr = [];
     const reviewImagesArr = [];
-
     reviews.forEach(review => {
-
         review.ReviewImages.forEach(img => {
             reviewImagesArr.push({
                 id: img.id,
                 url: img.url
             });
         });
-
+        //change to ternary 
         let previewImage = null;
-
         if (review.Spot.SpotImages.length > 0) {
             previewImage = review.Spot.SpotImages[0].url;
         }
-
-        //couldnt figure out nesting w/o manual creation - if have time try to refactor old code to fix nesting 
+        //try to refactor old code to fix nesting (instead of manually creating)
         reviewArr.push({
             id: review.id,
             userId: review.userId,
@@ -163,13 +102,11 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
             ReviewImages: reviewImagesArr
         });
     });
-
     if (reviewArr.length) {
         return res.json({ Reviews: reviewArr });
     } else {
         return res.status(400).json({ message: "Reviews couldn't be found" });
     }
-
 })
 
 //Edit a Review
@@ -194,7 +131,7 @@ router.put('/:reviewId', requireAuth, validateEditReview, async(req, res) => {
     }
 })
 
-//delete review by id
+//Delete a Review
 router.delete('/:reviewId', requireAuth, async(req, res) => {
     const review = await Review.findByPk(req.params.reviewId)
     if (!review) {

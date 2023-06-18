@@ -8,7 +8,7 @@ const { Op } = require('sequelize')
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-//validations -- move to seperate file
+//validations -- move to validators file -- beware differences in validators w same name but diff checks (rename to be more specific)
 const validStates = [
     'AL', 'Alabama', 'AK', 'Alaska', 'AZ', 'Arizona', 'AR', 'Arkansas',
     'CA', 'California', 'CO', 'Colorado', 'CT', 'Connecticut', 'DE', 'Delaware',
@@ -85,7 +85,6 @@ const validateSpot = [
     .withMessage('Price must be greater than $0.00.'),
     handleValidationErrors
 ];
-
 
 const validateReview = [
     check('review')
@@ -207,8 +206,6 @@ router.get('/current', requireAuth, async(req, res) => {
                 spotId: spotId
             }
         })
-
-        //REVIEW - what if more than one URL? 
         let previewImage = 0
         if (spotImages[0] !== undefined) {
             previewImage = spotImages[0].url
@@ -262,11 +259,9 @@ router.get('/:spotId', async(req, res) => {
             attributes: ['id', 'firstName', 'lastName']
         }]
     })
-
     if (!spot) {
         return res.status(404).json({ message: "Spot couldn't be found" });
     }
-
     const totalIndvReview = await Review.findAll({
         where: {
             spotId: req.params.spotId
@@ -346,7 +341,6 @@ router.get('', async(req, res) => {
     if (maxPrice < 0) {
         return res.status(400).json({ message: 'Maximum price must be greater than or equal to 0' })
     }
-
     pagination.limit = size
     pagination.offset = size * (page - 1)
 
@@ -396,7 +390,6 @@ router.get('', async(req, res) => {
         if (reviewCount > 0) {
             avgStar = sum / reviewCount
         }
-        //THIS ASSUME ONE IMAGE/URL PER SPOT SUBJECT TO CHANGE REVIEW
         //ask why this was throwing error as not ternary - declaration? 
         let previewImage = spotImages[0] !== undefined ? spotImages[0].url : 0
             //spread in the results and append avgStar/previewImage cols 
@@ -421,13 +414,12 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => 
     }
     //check to see if user has already made a review for this spot
     const userReviews = await Review.findAll({
-        where: {
-            userId: req.user.id,
-            spotId: req.params.spotId
-        }
-    })
-
-    //if there are any reviews throw error
+            where: {
+                userId: req.user.id,
+                spotId: req.params.spotId
+            }
+        })
+        //if there are any reviews throw error
     if (userReviews.length > 0) {
         return res.status(500).json({ message: 'User already has a review for this spot' })
     }
@@ -469,7 +461,20 @@ router.post(
     validateSpot, requireAuth,
     async(req, res) => {
         const { ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, updatedAt } = req.body;
-        const spot = await Spot.create({ ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price, createdAt, updatedAt });
+        const spot = await Spot.create({
+            ownerId: req.user.id,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price,
+            createdAt,
+            updatedAt
+        });
         return res.json(spot);
     }
 );
@@ -557,24 +562,7 @@ router.put('/:spotId', requireAuth, async(req, res) => {
     }
 })
 
-
-//delete a spot by Id
-router.delete('/:spotId', requireAuth, async(req, res) => {
-    const spot = await Spot.findByPk(req.params.spotId)
-    if (!spot) {
-        return res.status(404).json({ message: "Spot couldn't be found" });
-    }
-    if (spot.ownerId === req.user.id) {
-        await spot.destroy()
-        res.json({
-            message: 'Successfully deleted'
-        })
-    } else {
-        return res.status(404).json({ message: "Spot couldn't be found" });
-    }
-})
-
-//get all bookings for a spot based on spotId
+//Get all bookings for a spot
 router.get('/:spotId/bookings', requireAuth, async(req, res) => {
     const spot = await Spot.findByPk(req.params.spotId)
     const bookingNotOwner = await Booking.findAll({
@@ -603,14 +591,11 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
     }
 })
 
-//create a booking from a spot based on spot Id
+//Create a booking for a spot
 router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
-    console.log(spot)
-    console.log('Hello')
     if (!spot) {
-        console.log('*****************************************************')
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     const previousBooking = await Booking.findAll({
@@ -632,7 +617,9 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
     }
     //fixes problem franco pointed out -- check timing for EACH booking of prevBooking not just the whole thing
     for (const indBooking of previousBooking) {
-        if ((booking.startDate >= indBooking.startDate && booking.startDate <= indBooking.endDate) || (booking.endDate >= indBooking.startDate && booking.endDate <= indBooking.endDate)) {
+        if ((booking.startDate >= indBooking.startDate && booking.startDate <= indBooking.endDate) ||
+            (booking.endDate >= indBooking.startDate && booking.endDate <= indBooking.endDate) ||
+            (booking.startDate <= indBooking.startDate && booking.endDate >= indBooking.endDate)) {
             return res.status(403).json({
                 message: "Sorry, this spot is already booked for the specified dates",
                 errors: {
@@ -642,10 +629,23 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
             })
         }
     }
-
     return res.json(booking)
-
 })
 
+//Delete a Spot
+router.delete('/:spotId', requireAuth, async(req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    if (!spot) {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+    if (spot.ownerId === req.user.id) {
+        await spot.destroy()
+        res.json({
+            message: 'Successfully deleted'
+        })
+    } else {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+})
 
 module.exports = router;
