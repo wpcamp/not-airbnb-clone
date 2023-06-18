@@ -86,6 +86,7 @@ const validateSpot = [
     handleValidationErrors
 ];
 
+
 const validateReview = [
     check('review')
     .notEmpty()
@@ -396,6 +397,7 @@ router.get('', async(req, res) => {
             avgStar = sum / reviewCount
         }
         //THIS ASSUME ONE IMAGE/URL PER SPOT SUBJECT TO CHANGE REVIEW
+        //ask why this was throwing error as not ternary - declaration? 
         let previewImage = spotImages[0] !== undefined ? spotImages[0].url : 0
             //spread in the results and append avgStar/previewImage cols 
         const spotWithAvgStar = {
@@ -474,7 +476,7 @@ router.post(
 
 //edit a spot by id
 //idea: user shouldn't be able to leave review for a spot they own 
-router.put('/:spotId', requireAuth, validateSpot, async(req, res) => {
+router.put('/:spotId', requireAuth, async(req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
         return res.status(404).json({ message: "Spot couldn't be found" })
@@ -484,31 +486,67 @@ router.put('/:spotId', requireAuth, validateSpot, async(req, res) => {
             spot.ownerId = req.body.ownerId
         }
         if (req.body.address) {
-            spot.address = req.body.address
+            if (req.body.address.length > 6) {
+                spot.address = req.body.address
+            } else {
+                res.status(400).json({ message: 'Address must be longer than 5 characters.' })
+            }
         }
         if (req.body.city) {
-            spot.city = req.body.city
+            if (req.body.city.length > 3) {
+                spot.city = req.body.city
+            } else {
+                res.status(400).json({ message: 'City must be at least 3 characters.' })
+            }
         }
         if (req.body.state) {
-            spot.state = req.body.state
+            if (validStates.includes(req.body.state)) {
+                spot.state = req.body.state
+            } else {
+                res.status(400).json({ message: 'State must be 2 character abbreviation or first letter capitalized' })
+            }
         }
         if (req.body.country) {
-            spot.country = req.body.country
+            if (req.body.country.length > 2) {
+                spot.country = req.body.country
+            } else {
+                res.status(400).json({ message: 'Country must be at least 2 characters.' })
+            }
         }
         if (req.body.lat) {
-            spot.lat = req.body.lat
+            if (req.body.lat >= -90 && req.body.lat <= 90) {
+                spot.lat = req.body.lat
+            } else {
+                res.status(400).json({ message: 'Latitude must be between -90 and 90.' })
+            }
         }
         if (req.body.lng) {
-            spot.lng = req.body.lng
+            if (req.body.lng >= -180 && req.body.lng <= 180) {
+                spot.lng = req.body.lng
+            } else {
+                res.status(400).json({ message: 'Longitude must be between -90 and 90.' })
+            }
         }
         if (req.body.name) {
-            spot.name = req.body.name
+            if (req.body.name.length > 0 && req.body.name.length <= 50) {
+                spot.name = req.body.name
+            } else {
+                res.status(400).json({ message: 'Name must be between 1 and 50 characters' })
+            }
         }
         if (req.body.description) {
-            spot.description = req.body.description
+            if (typeof req.body.description === 'string') {
+                spot.description = req.body.description
+            } else {
+                res.status(400).json({ message: 'Description must be a string' })
+            }
         }
         if (req.body.price) {
-            spot.price = req.body.price
+            if (req.body.price > 0) {
+                spot.price = req.body.price
+            } else {
+                res.status(400).json({ message: 'Price per day must be greater than $0.00' })
+            }
         }
         spot.updatedAt = new Date()
 
@@ -569,7 +607,10 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
 router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) => {
     const { startDate, endDate } = req.body
     const spot = await Spot.findByPk(req.params.spotId)
+    console.log(spot)
+    console.log('Hello')
     if (!spot) {
+        console.log('*****************************************************')
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     const previousBooking = await Booking.findAll({
@@ -589,14 +630,17 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async(req, res) 
     if (req.user.id === spot.ownerId) {
         return res.status(400).json({ message: "You cannot book a spot you own" })
     }
-    if ((booking.startDate >= previousBooking.startDate && booking.startDate <= previousBooking.endDate) || (booking.endDate >= previousBooking.startDate && booking.endDate <= previousBooking.endDate)) {
-        return res.status(403).json({
-            message: "Sorry, this spot is already booked for the specified dates",
-            errors: {
-                startDate: "Start date conflicts with an existing booking",
-                endDate: "End date conflicts with an existing booking"
-            }
-        })
+    //fixes problem franco pointed out -- check timing for EACH booking of prevBooking not just the whole thing
+    for (const indBooking of previousBooking) {
+        if ((booking.startDate >= indBooking.startDate && booking.startDate <= indBooking.endDate) || (booking.endDate >= indBooking.startDate && booking.endDate <= indBooking.endDate)) {
+            return res.status(403).json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                errors: {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+            })
+        }
     }
 
     return res.json(booking)

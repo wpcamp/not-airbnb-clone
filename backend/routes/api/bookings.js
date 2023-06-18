@@ -131,6 +131,9 @@ router.put('/:bookingId', requireAuth, validateBookings, async(req, res) => {
             ]
         }]
     })
+    if (!booking) {
+        return res.status(404).json({ message: "Booking couldn't be found" })
+    }
     const previousBooking = await Booking.findAll({
         where: {
             spotId: booking.spotId,
@@ -140,9 +143,6 @@ router.put('/:bookingId', requireAuth, validateBookings, async(req, res) => {
         }
     })
     const currDate = new Date()
-    if (!booking) {
-        return res.status(404).json({ message: "Booking couldn't be found" })
-    }
     if (booking.endDate < currDate) {
         return res.status(403).json({ message: "Past bookings can't be modified" })
     }

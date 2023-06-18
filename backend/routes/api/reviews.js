@@ -91,8 +91,7 @@ router.post('/:reviewId/images', requireAuth, validateReviewImage, async(req, re
 
 //get all reviews of the current user
 router.get('/current', restoreUser, requireAuth, async(req, res) => {
-    //need to fix nesting so it follows API docs REVIEW
-    let reviews = await Review.findAll({
+    const reviews = await Review.findAll({
         where: {
             userId: req.user.id
         },
@@ -103,15 +102,10 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
             },
             {
                 model: Spot,
-                attributes: ['id',
-                    'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
-                    'price'
-                ],
+                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
                 include: [{
                     model: SpotImage,
-                    attributes: [
-                        ['url', 'previewImg']
-                    ]
+                    attributes: ['url'],
                 }]
             },
             {
@@ -119,13 +113,63 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
                 attributes: ['id', 'url']
             }
         ]
-    })
+    });
+    // can't use same method as for previewImg on Spot - can't key into attrs the same - manual? 
+    const reviewArr = [];
+    const reviewImagesArr = [];
 
-    if (reviews[0].userId === req.user.id) {
-        return res.json(reviews)
+    reviews.forEach(review => {
+
+        review.ReviewImages.forEach(img => {
+            reviewImagesArr.push({
+                id: img.id,
+                url: img.url
+            });
+        });
+
+        let previewImage = null;
+
+        if (review.Spot.SpotImages.length > 0) {
+            previewImage = review.Spot.SpotImages[0].url;
+        }
+
+        //couldnt figure out nesting w/o manual creation - if have time try to refactor old code to fix nesting 
+        reviewArr.push({
+            id: review.id,
+            userId: review.userId,
+            spotId: review.spotId,
+            review: review.review,
+            stars: review.stars,
+            createdAt: review.createdAt,
+            updatedAt: review.updatedAt,
+            User: {
+                id: review.User.id,
+                firstName: review.User.firstName,
+                lastName: review.User.lastName
+            },
+            Spot: {
+                id: review.Spot.id,
+                ownerId: review.Spot.ownerId,
+                address: review.Spot.address,
+                city: review.Spot.city,
+                state: review.Spot.state,
+                country: review.Spot.country,
+                lat: review.Spot.lat,
+                lng: review.Spot.lng,
+                name: review.Spot.name,
+                price: review.Spot.price,
+                previewImage: previewImage
+            },
+            ReviewImages: reviewImagesArr
+        });
+    });
+
+    if (reviewArr.length) {
+        return res.json({ Reviews: reviewArr });
     } else {
-        return res.status(400).json({ message: "Reviews couldn't be found" })
+        return res.status(400).json({ message: "Reviews couldn't be found" });
     }
+
 })
 
 //Edit a Review
