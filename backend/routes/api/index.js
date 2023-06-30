@@ -26,8 +26,8 @@ router.use('/spots', spotsRouter)
 router.get('/test', requireAuth, (req, res) => {
     res.json({ message: 'success' })
 })
-router.post('/test', (req, res) => {
-    res.json({ requestBody: req.body });
-});
+// router.post('/test', (req, res) => {
+//     res.json({ requestBody: req.body });
+// });
 
 module.exports = router;

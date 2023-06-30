@@ -13,12 +13,12 @@ const router = express.Router();
 
 const validateLogin = [
     check('credential')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Please provide a valid email or username.'),
     check('password')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
+        .exists({ checkFalsy: true })
+        .withMessage('Please provide a password.'),
     handleValidationErrors
 ]
 
@@ -26,7 +26,7 @@ const validateLogin = [
 
 // Restore session user
 router.get(
-    '/', requireAuth,
+    '/',
     (req, res) => {
         const { user } = req;
         if (user) {
@@ -44,11 +44,14 @@ router.get(
     }
 );
 
+
+
+
 // Log in
 router.post(
     '/',
     validateLogin,
-    async(req, res, next) => {
+    async (req, res, next) => {
         const { credential, password } = req.body;
 
         const user = await User.unscoped().findOne({
