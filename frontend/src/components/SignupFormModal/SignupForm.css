@@ -1,0 +1,49 @@
+.signupModal {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+#signUpHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signupForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 450px;
+    height: 300px;
+    top: 50px;
+    border-radius: 10;
+    gap: 10px;
+
+}
+
+#emailInput, #usernameInputSign, #firstInput, #lastInput, #passwordInputSign, #confirmPasswordInput {
+    width: 400px;
+    border: 3px black solid;
+    background-color: rgb(198, 219, 238);
+}
+
+#signUpButton {
+    margin-top: 25px;
+    height: 50px;
+    box-shadow: 5px 5px 0px gray;
+    background-color: rgb(255, 90, 95);
+    width: 400px;
+}
+
+/* need to fix errors so that it doesn't push everything down and errors show at the top of the screen */
+.signupModal .errorsSignUp {
+    color: red;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    text-align: left;
+
+}

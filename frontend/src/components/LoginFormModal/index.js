@@ -27,31 +27,37 @@ function LoginFormModal() {
 
     return (
         <>
-            <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username or Email
-                    <input
-                        type="text"
-                        value={credential}
-                        onChange={(e) => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
+            <div id='loginModal'>
+                <h1 id="logInHeader">Log In</h1>
                 {errors.credential && (
-                    <p>{errors.credential}</p>
+                    <p id='errorsLogIn'>{errors.credential}</p>
                 )}
-                <button type="submit">Log In</button>
-            </form>
+
+                <form className='loginForm' onSubmit={handleSubmit}>
+                    <label >
+                        <input
+                            type="text"
+                            id="usernameInput"
+                            placeholder="Username or Email"
+                            value={credential}
+                            onChange={(e) => setCredential(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label >
+                        <input
+                            type="password"
+                            id="passwordInput"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button type="submit" id='loginButton'>Log In</button>
+                </form>
+                <button type="submit" id='demoUserButton'>Demo User</button>
+            </div>
         </>
     );
 }
