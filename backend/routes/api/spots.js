@@ -57,13 +57,13 @@ const validateSpot = [
     .isLength({ min: 3 })
     .withMessage('Country must be more than 2 characters.'),
     check('lat')
-    .notEmpty()
-    .withMessage('Latitude is not valid')
+    // .notEmpty()
+    // .withMessage('Latitude is not valid')
     .isFloat({ min: -90, max: 90 })
     .withMessage('Latitude must be between -90 and 90.'),
     check('lng')
-    .notEmpty()
-    .withMessage('Longitude is not valid')
+    // .notEmpty()
+    // .withMessage('Longitude is not valid')
     .isFloat({ min: -180, max: 180 })
     .withMessage('Longitude must be between -180 and 180.'),
     check('name')
@@ -213,12 +213,13 @@ router.get('/current', requireAuth, async(req, res) => {
         //spread in the results and append avgStar/previewImage cols 
         const spotWithAvgStar = {
             ...spot.toJSON(),
-            avgStar: avgStar,
+            avgRating: avgStar,
             previewImage: previewImage
         };
         //push the result above into the array (fixes not iterable error?)
         avgStarSpot.push(spotWithAvgStar);
     }
+    
     res.json(avgStarSpot)
 })
 
@@ -288,7 +289,7 @@ router.get('/:spotId', async(req, res) => {
     const spotIdResponse = {
         ...spot.toJSON(),
         numReviews: reviewNum,
-        avgStar: avgStar
+        avgRating: avgStar
     }
     res.json(spotIdResponse)
 })
@@ -396,14 +397,17 @@ router.get('', async(req, res) => {
         const spotWithAvgStar = {
             ...spot.toJSON(),
             previewImage: previewImage,
-            avgStar: avgStar,
+            avgRating: avgStar,
             page,
             size
         };
         //push the result above into the array (fixes not iterable error?)
         allSpotsWithAvgStar.push(spotWithAvgStar);
     }
-    return res.json(allSpotsWithAvgStar);
+    const response = {
+        Spots: allSpotsWithAvgStar
+    }
+    return res.json(response);
 })
 
 //create a review for a spot based on spotId
@@ -580,14 +584,23 @@ router.get('/:spotId/bookings', requireAuth, async(req, res) => {
             attributes: ['id', 'firstName', 'lastName']
         }]
     })
+
+    const resOwner = {
+        Bookings: bookingOwner
+    }
+
+    const resNotOwner = {
+        Bookings: bookingNotOwner
+    }
+
     if (!bookingNotOwner.length) {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
     if (req.user.id === spot.ownerId) {
-        return res.json(bookingOwner)
+        return res.json(resOwner)
     }
     if (req.user.id !== spot.ownerId) {
-        return res.json(bookingNotOwner)
+        return res.json(resNotOwner)
     }
 })
 

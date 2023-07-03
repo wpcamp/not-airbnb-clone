@@ -44,7 +44,10 @@ router.get('/current', restoreUser, requireAuth, async(req, res) => {
         //push the object into the arr to be sent
         bookingWImg.push(bookingObj);
     }
-    res.json(bookingWImg);
+    const response = {
+        Bookings: bookingWImg
+    }
+    res.json(response);
 })
 
 //edit a booking
