@@ -1,0 +1,14 @@
+.spotContainer {
+    display: flex;
+    flex-direction: row;
+    border: 1px red solid;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#spotDetailsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}

@@ -1,0 +1,80 @@
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#navProfileDiv {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#createSpotLink {
+    text-decoration: none;
+}
+
+/* #horizontalLine {
+    border-bottom: 5px solid grey;
+    border: 1px red solid;
+} */
+
+#navBarRightComp {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+#menuButton {
+    position: relative;
+    background-color: transparent;
+    border-radius: 25px;
+    
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    transform: translate(-5%, 35%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalButton-loggedin {
+    border: 1px black solid;
+    padding: 10px 30px 10px 30px;
+}
+
+.modalButton-logsign {
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    align-items: flex-start;
+    padding: 10px 50px 10px 10px;
+    gap: 5px;
+}
+
+#logoutButton {
+    background-color: grey;
+    color: white;
+    border-radius: 50px;
+    margin-left: 20px;
+    margin-top: 5px;
+    padding: 5px 5px 5px 5px;
+}
+
+#modalButton-logsign {
+    background-color: transparent;
+    border: none;
+}
+
+#logo {
+    width: 150px;
+    height: 50px;
+}
+
+li {
+    list-style-type: none;
+}
