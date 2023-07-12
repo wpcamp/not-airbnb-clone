@@ -1,0 +1,97 @@
+.createSpotContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createSpotFormDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+}
+
+input:not(.inputExc) {
+    width: 90%;
+    margin-bottom: 10px;
+    background-color: rgba(130, 199, 245, 0.46);
+}
+
+#moneySign {
+    padding-bottom: 10px;
+    font-size: 17px;
+}
+
+.inputExc {
+    width: 80%;
+    background-color: rgba(130, 199, 245, 0.46);
+}
+
+#createSpotHeader {
+    display: flex;
+    flex-direction: column;
+}
+
+#createSpotPrice {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.createSpotHeaderText {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+#createSpotCountry {
+    display: flex;
+    flex-direction: column;
+}
+
+#createSpotCityState {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+textarea {
+    height: 100px;
+    width: 380px;
+    resize: none;
+    background-color: rgba(130, 199, 245, 0.46);
+}
+
+hr {
+    height: 1px;
+    background-color: black;
+    width: 400px;
+
+}
+
+.createSpotHeaderTertiaryText {
+    font-size: 12px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+input::placeholder {
+    font-size: 12px;
+}
+
+#createNewSpotSubmitButtonDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#createNewSpotSubmitButton {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    height: 20px;
+    color: white;
+    box-shadow: 1px 1px 0px black;
+    background-color: rgb(255, 90, 95);
+    width: 100px;
+}

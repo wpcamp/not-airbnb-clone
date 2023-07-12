@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
                 </li>
                 <div id='navBarRightComp'>
                     <li>
-                        <NavLink to='/' id='createSpotLink'>Create a New Spot</NavLink>
+                        <NavLink to='/spots/new' id='createSpotLink'>Create a New Spot</NavLink>
                     </li>
                     {isLoaded && (
                         <li>
