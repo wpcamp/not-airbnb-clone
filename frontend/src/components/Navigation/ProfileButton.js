@@ -49,10 +49,10 @@ function ProfileButton({ user }) {
                     {user ? (
                         <>
                             <div className='modalButton-loggedin'>
-                                <li>Hello, {user.username}</li>
-                                <li>{user.email}</li>
+                                <li id="loggedInHello">Hello, {user.username}</li>
+                                <li id="loggedInEmail">{user.email}</li>
                                 {/* the navlink will bring to get all spots by user id */}
-                                <li><NavLink to='/'>Manage Spots</NavLink></li>
+                                <li id='loggedInManage'><NavLink to='/spots/current'>Manage Spots</NavLink></li>
                                 <li>
                                     <button id='logoutButton' onClick={logout}>Log Out</button>
                                 </li>

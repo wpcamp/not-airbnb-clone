@@ -19,42 +19,42 @@ export const SpotShow = () => {
         dispatch(thunkGetSpot(spotId))
         fetchSpotReviews()
     }, [dispatch, spotId])
-    console.log(reviews)
+
     return (
         <>
             <div>
                 <h1 id='spotTitle'>
-                    {spot?.name}
+                    {spot && spot?.name}
                 </h1>
                 <h4 id='spotLocation'>
-                    {spot?.city}, {spot?.state}, {spot?.country}
+                    {spot && spot?.city}, {spot && spot?.state}, {spot && spot?.country}
                 </h4>
                 <div className="spotImages">
                     <div id="mainSpotImage">
-                        <img src={spot?.SpotImages[0].url} width={500} height={500}></img>
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={500} height={500}></img>}
                     </div>
                     <div className="secondColSpotImages">
-                        <img src={spot?.SpotImages[0].url} width={250} height={250}></img>
-                        <img src={spot?.SpotImages[0].url} width={250} height={250}></img>
+                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                     <div className="thirdColSpotImages">
-                        <img src={spot?.SpotImages[0].url} width={250} height={250}></img>
-                        <img src={spot?.SpotImages[0].url} width={250} height={250}></img>
+                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                 </div>
                 <div className="hostDescriptionReserveDiv">
                     <div >
                         <div id='hostedByDiv'>
-                            Hosted by {spot?.Owner.firstName} {spot?.Owner.lastName}
+                            Hosted by { spot && spot?.Owner?.firstName} {spot && spot?.Owner?.lastName}
                         </div>
                         <div>
-                            {spot?.description}
+                            {spot && spot?.description}
                         </div>
                     </div>
                     <div className="priceReserveDiv">
                         <div id='priceReviewsDiv'>
-                            <a>${spot?.price} per night</a>
-                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating}  	•    {spot?.numReviews} reviews</a>
+                            <a>${spot && spot?.price} per night</a>
+                            <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} reviews</a>
                         </div>
                         <div className="reserveButtonDiv">
                             <button id='reserveButton' type="submit">RESERVE</button>
@@ -62,25 +62,23 @@ export const SpotShow = () => {
                     </div>
                 </div>
                 <div>
-                    <a><i className="fa-solid fa-star"></i> {spot?.avgRating} • {spot?.numReviews} reviews</a>
+                    <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating.toFixed(2)} • {spot && spot?.numReviews} reviews</a>
                 </div>
-                {reviews.map(review => {
+                {spot && reviews.map(review => {
                     return (
-                        <div>
+                        <div key={review.id}>
                             <div id='reviewUserName'>
-                                {review.User.firstName}
+                                {spot && review?.User.firstName}
                             </div>
                             <div id='reviewDate'>
-                                {review.createdAt.slice(5, 7)}-{review.createdAt.slice(0, 4)}
+                                {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
                             </div>
                             <div id='reviewReview'>
-                                {review.review}
+                                {spot && review?.review}
                             </div>
                         </div>)
                 })}
             </div>
-
-
         </>
     )
 }

@@ -48,13 +48,16 @@ const SpotManage = () => {
                         </div>
                         <div id="spotDetailsContainer">
                             <a>{spot?.city}, {spot?.state}</a>
-                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating}</a>
+                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating.toFixed(2)}</a>
                         </div>
                         <div id="spotPriceContainer">
                             <a>${spot?.price} per night</a>
                         </div>
                         <div className="actionButtons">
-                            <button id='updateButtonSpot'>Update</button>
+                            <button id='updateButtonSpot' onClick={(e) => {
+                                e.preventDefault()
+                                history.push(`/spots/${spot.id}/edit`)
+                            }}>Update</button>
                             <button id='deleteButtonSpot' onClick={(e) => {
                                 e.preventDefault()
                                 dispatch(thunkRemoveSpot(spot.id))

@@ -16,7 +16,7 @@ module.exports = {
             {
                 spotId: 2,
                 url: 'https://images.otstatic.com/prod1/29145482/2/large.jpg',
-                preview: false
+                preview: true
             },
             {
                 spotId: 3,
@@ -30,6 +30,10 @@ module.exports = {
             },{
                 spotId: 5,
                 url: 'https://ssl.cdn-redfin.com/photo/180/bigphoto/899/1524899_0.jpg',
+                preview: true
+            }, {
+                spotId: 6,
+                url: 'https://a0.muscache.com/im/pictures/miso/Hosting-21409981/original/a8fa243d-dac8-4238-93e5-f7aa33072ff8.jpeg?im_w=1200',
                 preview: true
             }
         ], {})

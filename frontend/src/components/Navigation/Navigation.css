@@ -10,14 +10,13 @@
 
 }
 
+#horizontalLine {
+    border-bottom: 1px grey solid;
+}
+
 #createSpotLink {
     text-decoration: none;
 }
-
-/* #horizontalLine {
-    border-bottom: 5px solid grey;
-    border: 1px red solid;
-} */
 
 #navBarRightComp {
     display: flex;
@@ -45,6 +44,23 @@
 .modalButton-loggedin {
     border: 1px black solid;
     padding: 10px 30px 10px 30px;
+    z-index: 100;
+    background-color: white;
+}
+
+#loggedInHello {
+    border-bottom: 1px black solid;
+    padding-bottom: 4px;
+}
+
+#loggedInEmail {
+    border-bottom: 1px black solid;
+    padding-bottom: 4px;
+}
+
+#loggedInManage {
+    border-bottom: 1px black solid;
+    padding-bottom: 4px;
 }
 
 .modalButton-logsign {

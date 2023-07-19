@@ -24,10 +24,10 @@ export const getSpot = (spot) => ({
     spot
 })
 
-// export const updateSpot = (spot) => ({
-//     type: UPDATE_SPOT,
-//     spot
-// })
+export const updateSpot = (spot) => ({
+    type: UPDATE_SPOT,
+    spot
+})
 
 export const removeSpot = (spotId) => ({
     type: REMOVE_SPOT,
@@ -81,22 +81,22 @@ export const thunkRemoveSpot = (spotId) => async dispatch => {
     }
 }
 
-// export const thunkUpdateSpot = (spot) => async dispatch => {
-//     const res = await csrfFetch(`/api/spots/${spot.id}`, {
-//         method: 'PUT',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(spot),
-//     })
+export const thunkUpdateSpot = (spot) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spot),
+    })
 
-//     if (res.ok) {
-//         const updatedSpot = await res.json()
-//         dispatch(updateSpot(updatedSpot))
-//         return updatedSpot
-//     } else {
-//         const errors = await res.json()
-//         return errors
-//     }
-// }
+    if (res.ok) {
+        const updatedSpot = await res.json()
+        dispatch(updateSpot(updatedSpot))
+        return updatedSpot
+    } else {
+        const errors = await res.json()
+        return errors
+    }
+}
 
 export const thunkCreateSpot = (spot) => async (dispatch) => {
     const res = await csrfFetch('/api/spots', {
@@ -136,8 +136,8 @@ const spotsReducer = (state = {}, action) => {
             newState = { ...state }
             delete newState[action.spotId]
             return newState
-        // case UPDATE_SPOT:
-        //     return { ...state, [action.spot.id]: action.spot }
+        case UPDATE_SPOT:
+            return { ...state, [action.spot.id]: action.spot }
         default:
             return state
     }

@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
 import SpotIndex from './components/SpotIndex/index'
 import { SpotShow } from "./components/SpotShow";
+import SpotUpdate from "./components/SpotUpdate";
 import NewSpotForm from "./components/NewSpotForm";
 import SpotManage from "./components/SpotManage";
 
@@ -23,6 +24,7 @@ function App() {
       <Switch>
         <Route path='/spots/new' component={NewSpotForm}/>
         <Route path='/spots/current' component={SpotManage}/>
+        <Route path='/spots/:spotId/edit' component={SpotUpdate}/>
         <Route path='/spots/:spotId' component={SpotShow}/>
         <Route path='/' component={SpotIndex}/>
       </Switch>
