@@ -2,16 +2,17 @@ import { thunkGetSpots, thunkGetSpot, thunkRemoveSpot } from "../../store/spots"
 import { Link, useHistory } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import SpotIndexItem from "../SpotIndexItem";
+import OpenModalButton from "../OpenModalButton";
 import { csrfFetch } from "../../store/csrf";
+import DeleteModal from "../DeleteModal";
+import './SpotManage.css'
 
 const SpotManage = () => {
     const spots = Object.values(useSelector((state) => (state.spots ? state.spots : [])))
     const dispatch = useDispatch()
     const history = useHistory()
     const [user, setUser] = useState(null)
-
+    const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user.id);
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
@@ -28,18 +29,22 @@ const SpotManage = () => {
         validateUser();
     }, []);
 
-
     useEffect(() => {
         dispatch(thunkGetSpots())
     }, [dispatch])
 
-    const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user.id);
+    const createSpotAction = () => {
+        history.push('/spots/new')
+    }
 
-
-    console.log('FILTERED SPOTS ', filteredSpots)
-    console.log('USER:', user?.user.id)
     return (
         <>
+            <div id="manageSpotsHeader">
+                Manage Spots
+            </div>
+            <div>
+                <button id='createSpotButton' onClick={createSpotAction}>Create a New Spot</button>
+            </div>
             <ul className="spotContainer">
                 {filteredSpots.map((spot) => (
                     <div key={spot?.id}>
@@ -58,10 +63,12 @@ const SpotManage = () => {
                                 e.preventDefault()
                                 history.push(`/spots/${spot.id}/edit`)
                             }}>Update</button>
-                            <button id='deleteButtonSpot' onClick={(e) => {
-                                e.preventDefault()
-                                dispatch(thunkRemoveSpot(spot.id))
-                            }}>Delete</button>
+                            <li id='deleteButtonSpot'>
+                                <OpenModalButton
+                                    buttonText="Delete"
+                                    modalComponent={<DeleteModal spotId={spot.id}/>}
+                                />
+                            </li>
                         </div>
                     </div>
                 ))}

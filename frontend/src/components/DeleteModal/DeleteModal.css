@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+
+*{
+    font-family: 'Quicksand', sans-serif;;
+}
+
+#deleteModal {
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#deleteModalYesButton {
+    background-color: rgb(255, 90, 95);
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#deleteModalNoButton {
+    background-color: grey;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#yesNoButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 300px;
+    margin: 25px 20px 15px 20px;
+    padding: 5px 0px 5px 0px;
+    
+}
+
+#modalButton-delete {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+}
+
+#updateButtonSpot {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+}
+
+.deleteModalHeader {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#deleteModalSecondaryText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+}

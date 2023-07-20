@@ -73,10 +73,12 @@
 }
 
 #logoutButton {
+    display: flex;
+    justify-content: center;
     background-color: grey;
     color: white;
     border-radius: 50px;
-    margin-left: 20px;
+    margin-left: 30px;
     margin-top: 5px;
     padding: 5px 5px 5px 5px;
 }
