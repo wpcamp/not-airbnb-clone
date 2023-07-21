@@ -4,12 +4,33 @@ import { thunkGetSpot } from "../../store/spots";
 import { useEffect, useState } from "react";
 import './SpotShow.css'
 import { csrfFetch } from "../../store/csrf";
+import OpenModalButton from "../OpenModalButton";
+import { DeleteSpotModal, DeleteReviewModal } from "../DeleteModal";
 
 export const SpotShow = () => {
     const { spotId } = useParams()
     const dispatch = useDispatch()
     const spot = useSelector((state) => state.spots[spotId])
+
+    const [user, setUser] = useState(null)
+
+    const getUser = async () => {
+        const userResponse = await csrfFetch('/api/session', {
+            method: 'GET'
+        });
+        const userData = await userResponse.json();
+        setUser(userData)
+    };
+
+    useEffect(() => {
+        const validateUser = async () => {
+            await getUser();
+        };
+        validateUser();
+    }, []);
+
     const [reviews, setReviews] = useState([])
+
     useEffect(() => {
         const fetchSpotReviews = async () => {
             const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
@@ -19,6 +40,8 @@ export const SpotShow = () => {
         dispatch(thunkGetSpot(spotId))
         fetchSpotReviews()
     }, [dispatch, spotId])
+
+   
 
     return (
         <>
@@ -34,18 +57,18 @@ export const SpotShow = () => {
                         {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={500} height={500}></img>}
                     </div>
                     <div className="secondColSpotImages">
-                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                     <div className="thirdColSpotImages">
-                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages &&<img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                 </div>
                 <div className="hostDescriptionReserveDiv">
                     <div >
                         <div id='hostedByDiv'>
-                            Hosted by { spot && spot?.Owner?.firstName} {spot && spot?.Owner?.lastName}
+                            Hosted by {spot && spot?.Owner?.firstName} {spot && spot?.Owner?.lastName}
                         </div>
                         <div>
                             {spot && spot?.description}
@@ -62,7 +85,7 @@ export const SpotShow = () => {
                     </div>
                 </div>
                 <div>
-                    <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating.toFixed(2)} • {spot && spot?.numReviews} reviews</a>
+                    <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>
                 </div>
                 {spot && reviews.map(review => {
                     return (
@@ -70,11 +93,20 @@ export const SpotShow = () => {
                             <div id='reviewUserName'>
                                 {spot && review?.User.firstName}
                             </div>
+
                             <div id='reviewDate'>
                                 {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
                             </div>
                             <div id='reviewReview'>
                                 {spot && review?.review}
+                            {(review?.userId === user?.user?.id) &&
+                                <div id="userReviewDeleteButton">
+                                    <OpenModalButton
+                                        buttonText="Delete"
+                                        modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                                    />
+                                </div>}
+                                {/* <button onClick={()=>console.log('review id', review.id)}>Click to see review Id</button> */}
                             </div>
                         </div>)
                 })}

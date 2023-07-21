@@ -22,8 +22,10 @@ function LoginFormModal() {
                 if (data && data.errors) {
                     setErrors(data.errors);
                 }
+                // console.log(data)
             });
     };
+
 
     return (
         <>

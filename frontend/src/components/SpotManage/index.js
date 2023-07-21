@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import { csrfFetch } from "../../store/csrf";
-import DeleteModal from "../DeleteModal";
+import {DeleteSpotModal} from "../DeleteModal";
 import './SpotManage.css'
 
 const SpotManage = () => {
@@ -12,7 +12,7 @@ const SpotManage = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [user, setUser] = useState(null)
-    const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user.id);
+    const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user?.id);
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
@@ -66,7 +66,7 @@ const SpotManage = () => {
                             <li id='deleteButtonSpot'>
                                 <OpenModalButton
                                     buttonText="Delete"
-                                    modalComponent={<DeleteModal spotId={spot.id}/>}
+                                    modalComponent={<DeleteSpotModal spotId={spot.id}/>}
                                 />
                             </li>
                         </div>

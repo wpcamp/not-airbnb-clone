@@ -24,6 +24,10 @@
 
 }
 
+#userReviewDeleteButton {
+    margin-top: 5px;
+}
+
 .reserveButtonDiv {
     display: flex;
     justify-content: center;

@@ -23,7 +23,7 @@ const SpotUpdate = () => {
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
-    },[])
+    }, [])
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
@@ -34,15 +34,20 @@ const SpotUpdate = () => {
         setErrors({});
         const newSpot = { id: spotId, country, address, city, state, price, description, name }
         const spot = await dispatch(thunkUpdateSpot(newSpot))
+        console.log(spot)
         if (spot.errors) {
-                setErrors(spot.errors);
-            } else {
+            setErrors(spot.errors);
+        } else {
             history.push(`/spots/${spot.id}`)
         }
     }
+
+    // console.log('errors',spot.errors)
+
     return (
         <>
-            <div className='createSpotContainer'>
+        {/* get rid of spot && ... line below */}
+            { spot && <div className='createSpotContainer'> 
                 <div className='createSpotFormDiv'>
                     <div id='createSpotHeader'>
                         <a className='createSpotHeaderText'>Update your Spot</a>
@@ -98,7 +103,7 @@ const SpotUpdate = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     );
 };

@@ -43,7 +43,7 @@ function ProfileButton({ user }) {
             <div id="navProfileDiv">
                 <button id='menuButton' onClick={openMenu}>
                     <i className="fa-solid fa-bars"></i>
-                    <i className="fas fa-user-circle"/>
+                    <i className="fas fa-user-circle" />
                 </button>
                 {showMenu && (<ul className={ulClassName} ref={ulRef}>
                     {user ? (
@@ -51,7 +51,6 @@ function ProfileButton({ user }) {
                             <div className='modalButton-loggedin'>
                                 <li id="loggedInHello">Hello, {user.username}</li>
                                 <li id="loggedInEmail">{user.email}</li>
-                                {/* the navlink will bring to get all spots by user id */}
                                 <li id='loggedInManage'><NavLink to='/spots/current'>Manage Spots</NavLink></li>
                                 <li>
                                     <button id='logoutButton' onClick={logout}>Log Out</button>
@@ -77,8 +76,8 @@ function ProfileButton({ user }) {
                         </>
                     )}
                 </ul>)}
-            </div>
-            
+            </div >
+
         </>
     );
 }
