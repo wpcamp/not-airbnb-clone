@@ -15,6 +15,8 @@ function LoginFormModal() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
+        console.log('cred:', credential)
+        console.log('pass:', password);
         return dispatch(sessionActions.login({ credential, password }))
             .then(closeModal)
             .catch(async (res) => {
@@ -22,9 +24,14 @@ function LoginFormModal() {
                 if (data && data.errors) {
                     setErrors(data.errors);
                 }
-                // console.log(data)
             });
     };
+
+    const handleDemoUser = (e) => {
+        e.preventDefault()
+        return dispatch(sessionActions.login({ credential:'Demo-lition', password:'password' }))
+            .then(closeModal)
+    }
 
 
     return (
@@ -58,7 +65,7 @@ function LoginFormModal() {
                     </label>
                     <button type="submit" id='loginButton'>Log In</button>
                 </form>
-                <button type="submit" id='demoUserButton'>Demo User</button>
+                <button type="submit" id='demoUserButton' onClick={handleDemoUser}>Demo User</button>
             </div>
         </>
     );

@@ -12,8 +12,9 @@ export const SpotShow = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const spot = useSelector((state) => state.spots[spotId])
-
+    const [reviews, setReviews] = useState([])
     const [user, setUser] = useState(null)
+
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
@@ -30,7 +31,6 @@ export const SpotShow = () => {
         validateUser();
     }, []);
 
-    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         const fetchSpotReviews = async () => {
@@ -106,7 +106,7 @@ export const SpotShow = () => {
                                     <div id="userReviewDeleteButton">
                                         <OpenModalButton
                                             buttonText="Delete"
-                                            modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spot.id} />}
+                                            modalComponent={<DeleteReviewModal reviewId={review.id}/>}
                                         />
                                     </div>}
                             </div>

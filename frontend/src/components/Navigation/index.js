@@ -8,7 +8,7 @@ import logo from '../../images/airbnb-logo.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-
+    console.log(sessionUser)
     return (
         <>
             <ul className='navBar'>
@@ -16,9 +16,9 @@ function Navigation({ isLoaded }) {
                     <NavLink exact to="/"><img src={logo} alt='NotAirbnb Logo' id='logo'></img></NavLink>
                 </li>
                 <div id='navBarRightComp'>
-                    <li>
+                    {sessionUser && <li>
                         <NavLink to='/spots/new' id='createSpotLink'>Create a New Spot</NavLink>
-                    </li>
+                    </li>}
                     {isLoaded && (
                         <li>
                             <ProfileButton user={sessionUser} />

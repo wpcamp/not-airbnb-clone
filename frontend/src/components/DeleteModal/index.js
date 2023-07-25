@@ -43,7 +43,7 @@ function DeleteSpotModal({ spotId }) {
     );
 }
 
-function DeleteReviewModal({ reviewId, spotId }) {
+function DeleteReviewModal({ reviewId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const history = useHistory()
