@@ -140,7 +140,7 @@ router.delete('/:reviewId', requireAuth, async(req, res) => {
     let spot = await Spot.findByPk(review.spotId, {
         attributes: ['ownerId']
     })
-    if (spot.ownerId === req.user.id) {
+    if (review.userId === req.user.id) {
         review.destroy()
         return res.json({ message: 'Successfully deleted' })
     } else {

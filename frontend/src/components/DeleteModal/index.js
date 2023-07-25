@@ -8,11 +8,14 @@ import "./DeleteModal.css";
 import { useEffect } from "react";
 import { thunkRemoveReview } from "../../store/reviews";
 import { useSelector } from "react-redux";
+import { useHistory, useParams, useLocation } from "react-router-dom";
+import {forceUpdate} from 'react'
+
+
 
 function DeleteSpotModal({ spotId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
     const keepSpot = (e) => {
         e.preventDefault()
         closeModal()
@@ -40,10 +43,10 @@ function DeleteSpotModal({ spotId }) {
     );
 }
 
-function DeleteReviewModal({ reviewId }) {
+function DeleteReviewModal({ reviewId, spotId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
+    const history = useHistory()
     const keepReview = (e) => {
         e.preventDefault()
         closeModal()
@@ -63,7 +66,10 @@ function DeleteReviewModal({ reviewId }) {
                     <a id='deleteModalSecondaryText'>Are you sure you want to remove this review from the listings?</a>
                 </div>
                 <div id="yesNoButtons">
-                    <button type="submit" id='deleteModalYesButton' onClick={(e) => deleteReview(e, reviewId)}>Yes (Delete Review)</button>
+                    <button type="submit" id='deleteModalYesButton' onClick={(e) => {
+                        deleteReview(e, reviewId)
+                        history.push(-1)
+                        }}>Yes (Delete Review)</button>
                     <button type="submit" id='deleteModalNoButton' onClick={keepReview}>No (Keep Review)</button>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import { DeleteSpotModal, DeleteReviewModal } from "../DeleteModal";
 
 export const SpotShow = () => {
     const { spotId } = useParams()
+    const history = useHistory()
     const dispatch = useDispatch()
     const spot = useSelector((state) => state.spots[spotId])
 
@@ -41,7 +42,7 @@ export const SpotShow = () => {
         fetchSpotReviews()
     }, [dispatch, spotId])
 
-   
+
 
     return (
         <>
@@ -77,7 +78,8 @@ export const SpotShow = () => {
                     <div className="priceReserveDiv">
                         <div id='priceReviewsDiv'>
                             <a>${spot && spot?.price} per night</a>
-                            <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} reviews</a>
+                            {(reviews.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} reviews</a>}
+                            {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} review</a>}
                         </div>
                         <div className="reserveButtonDiv">
                             <button id='reserveButton' type="submit">RESERVE</button>
@@ -85,13 +87,14 @@ export const SpotShow = () => {
                     </div>
                 </div>
                 <div>
-                    <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>
+                    {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
+                    {(reviews.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
                 </div>
                 {spot && reviews.map(review => {
                     return (
                         <div key={review.id}>
                             <div id='reviewUserName'>
-                                {spot && review?.User.firstName}
+                                {spot && review?.User?.firstName}
                             </div>
 
                             <div id='reviewDate'>
@@ -99,14 +102,13 @@ export const SpotShow = () => {
                             </div>
                             <div id='reviewReview'>
                                 {spot && review?.review}
-                            {(review?.userId === user?.user?.id) &&
-                                <div id="userReviewDeleteButton">
-                                    <OpenModalButton
-                                        buttonText="Delete"
-                                        modalComponent={<DeleteReviewModal reviewId={review.id} />}
-                                    />
-                                </div>}
-                                {/* <button onClick={()=>console.log('review id', review.id)}>Click to see review Id</button> */}
+                                {(review?.userId === user?.user?.id) &&
+                                    <div id="userReviewDeleteButton">
+                                        <OpenModalButton
+                                            buttonText="Delete"
+                                            modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spot.id} />}
+                                        />
+                                    </div>}
                             </div>
                         </div>)
                 })}
