@@ -8,7 +8,7 @@ import { thunkCreateSpot } from '../../store/spots';
 const NewSpotForm = ({ spot }) => {
     const history = useHistory();
     const [country, setCountry] = useState('')
-    const [street, setStreet] = useState('')
+    const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [price, setPrice] = useState('')
@@ -19,25 +19,56 @@ const NewSpotForm = ({ spot }) => {
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setErrors({});
+    //     const newSpot = { country, address, city, state, price, description, name, imageURLs }
+    //     const res = await dispatch(thunkCreateSpot(newSpot))
+    //     console.log('RES:', res);
+
+    //     if (res.ok) {
+    //         const spot = await res.json()
+    //         console.log('SPOT', spot)
+    //         history.push(`/spots/${spot.id}`)
+    //     } else {
+    //         const data = await res.json()
+    //         console.log('data', data)
+    //         setErrors(data.errors);
+    //         console.log('ERRORS', data)
+    //         return
+    //     }
+    // }
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setErrors({});
+    //     spot = { country, address, city, state, price, description, name, imageURLs }
+    //     const newSpot = await dispatch(thunkCreateSpot(spot))
+    //     spot = newSpot
+    //     console.log('SPOT OK HERE =>',spot.errors)
+    //     console.log('RES:', res);
+
+    //     if (spot.errors) {
+    //         setErrors(spot.errors);
+    //     }else {
+    //         history.push(`/spots/${spot.id}`)
+    //         const data = await res.json()
+    //         console.log('data', data)
+    //         console.log('ERRORS', data)
+    //     }
+    // }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        const newSpot = { country, street, city, state, price, description, title, imageURLs }
-        const res = await dispatch(thunkCreateSpot(newSpot))
-        console.log('RES:', res);
-
-        if (res.ok) {
-            const spot = await res.json()
-            history.push(`/spots/${spot.id}`)
-        } else {
-            const data = await res.json()
-            console.log('data', data)
-            setErrors(data.errors);
-            console.log('ERRORS', data)
-            return
+        const spotData = { country, address, city, state, price, description, name, imageURLs };
+        try {
+            const newSpot = await dispatch(thunkCreateSpot(spotData));
+            console.log('SPOT OK HERE =>', newSpot);
+            history.push(`/spots/${newSpot.id}`);
+        } catch (errors) {
+            console.error(errors)
+            setErrors(errors);
         }
-    }
-
+    };
 
     return (
         <>
@@ -45,7 +76,7 @@ const NewSpotForm = ({ spot }) => {
                 <div className='createSpotFormDiv'>
                     <div id='createSpotHeader'>
                         <a className='createSpotHeaderText'>Create a new Spot</a>
-                        {/* {errors?.country && <p>{errors.country}</p>} */}
+                        {errors.country && <p>{errors.country}</p>}
                         <a className='createSpotHeaderSecondaryText'>Where's your place located?</a>
                         <a className='createSpotHeaderTertiaryText'>Guests will only get your exact address once they booked a reservation.</a>
                     </div>
@@ -60,7 +91,7 @@ const NewSpotForm = ({ spot }) => {
                             <div id='createSpotStreet'>
                                 <label className='createSpotHeaderTertiaryText'>
                                     Street Address
-                                    <input type='text' placeholder='Address' value={street} onChange={e => setStreet(e.target.value)} />
+                                    <input type='text' placeholder='Address' value={address} onChange={e => setAddress(e.target.value)} />
                                 </label>
                             </div>
                             <div id='createSpotCityState'>

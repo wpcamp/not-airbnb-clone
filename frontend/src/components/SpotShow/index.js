@@ -42,7 +42,9 @@ export const SpotShow = () => {
         fetchSpotReviews()
     }, [dispatch, spotId])
 
-
+    const reserveClick = () => {
+        return window.alert('Feature coming soon!')
+    }
 
     return (
         <>
@@ -82,36 +84,44 @@ export const SpotShow = () => {
                             {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} review</a>}
                         </div>
                         <div className="reserveButtonDiv">
-                            <button id='reserveButton' type="submit">RESERVE</button>
+                            <button id='reserveButton' type="submit" onClick={()=> reserveClick()}>RESERVE</button>
                         </div>
                     </div>
                 </div>
                 <div>
-                    {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
-                    {(reviews.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
+                    {(reviews?.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
+                    {(reviews?.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
                 </div>
-                {spot && reviews.map(review => {
-                    return (
-                        <div key={review.id}>
-                            <div id='reviewUserName'>
-                                {spot && review?.User?.firstName}
-                            </div>
+                <div>
+                    {(!reviews || reviews.length === 0) ? (
+                        <div>No Reviews Yet.</div>
+                    ) : (
+                        spot && reviews.map(review => {
+                            return (
+                                <div key={review?.id}>
+                                    <div id='reviewUserName'>
+                                        {spot && review?.User?.firstName}
+                                    </div>
 
-                            <div id='reviewDate'>
-                                {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
-                            </div>
-                            <div id='reviewReview'>
-                                {spot && review?.review}
-                                {(review?.userId === user?.user?.id) &&
-                                    <div id="userReviewDeleteButton">
-                                        <OpenModalButton
-                                            buttonText="Delete"
-                                            modalComponent={<DeleteReviewModal reviewId={review.id}/>}
-                                        />
-                                    </div>}
-                            </div>
-                        </div>)
-                })}
+                                    <div id='reviewDate'>
+                                        {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
+                                    </div>
+                                    <div id='reviewReview'>
+                                        {spot && review?.review}
+                                        {(review?.userId === user?.user?.id) && (
+                                            <div id="userReviewDeleteButton">
+                                                <OpenModalButton
+                                                    buttonText="Delete"
+                                                    modalComponent={<DeleteReviewModal reviewId={review?.id} />}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
+                </div>
             </div>
         </>
     )

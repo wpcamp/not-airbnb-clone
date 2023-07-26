@@ -53,7 +53,7 @@ const SpotManage = () => {
                         </div>
                         <div id="spotDetailsContainer">
                             <a>{spot?.city}, {spot?.state}</a>
-                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating.toFixed(2)}</a>
+                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)}</a>
                         </div>
                         <div id="spotPriceContainer">
                             <a>${spot?.price} per night</a>

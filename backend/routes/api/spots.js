@@ -56,16 +56,16 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .isLength({ min: 3 })
     .withMessage('Country must be more than 2 characters.'),
-    check('lat')
+    // check('lat')
     // .notEmpty()
     // .withMessage('Latitude is not valid')
-    .isFloat({ min: -90, max: 90 })
-    .withMessage('Latitude must be between -90 and 90.'),
-    check('lng')
+    // .isFloat({ min: -90, max: 90 })
+    // .withMessage('Latitude must be between -90 and 90.'),
+    // check('lng')
     // .notEmpty()
     // .withMessage('Longitude is not valid')
-    .isFloat({ min: -180, max: 180 })
-    .withMessage('Longitude must be between -180 and 180.'),
+    // .isFloat({ min: -180, max: 180 })
+    // .withMessage('Longitude must be between -180 and 180.'),
     check('name')
     .exists({ checkFalsy: true })
     .notEmpty()
@@ -240,7 +240,8 @@ router.get('/:spotId/reviews', async(req, res) => {
         ]
     })
     if (!allReviews.length) {
-        return res.status(404).json({ message: "Spot couldn't be found" });
+        // return res.status(404).json({ message: "Spot couldn't be found" });
+        return 
     }
     res.json(allReviews)
 })
