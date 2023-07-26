@@ -17,22 +17,27 @@ const NewSpotForm = ({ spot }) => {
     const [title, setTitle] = useState('')
     const [imageURLs, setImageURLs] = useState(['', '', '', '', ''])
     const [errors, setErrors] = useState({})
-
     const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
         const newSpot = { country, street, city, state, price, description, title, imageURLs }
-        const spot = await dispatch(thunkCreateSpot(newSpot))
+        const res = await dispatch(thunkCreateSpot(newSpot))
+        console.log('RES:', res);
 
-
-        if (spot.errors) {
-            setErrors(spot.errors);
-        } else {
+        if (res.ok) {
+            const spot = await res.json()
             history.push(`/spots/${spot.id}`)
+        } else {
+            const data = await res.json()
+            console.log('data', data)
+            setErrors(data.errors);
+            console.log('ERRORS', data)
+            return
         }
     }
+
 
     return (
         <>
@@ -40,6 +45,7 @@ const NewSpotForm = ({ spot }) => {
                 <div className='createSpotFormDiv'>
                     <div id='createSpotHeader'>
                         <a className='createSpotHeaderText'>Create a new Spot</a>
+                        {/* {errors?.country && <p>{errors.country}</p>} */}
                         <a className='createSpotHeaderSecondaryText'>Where's your place located?</a>
                         <a className='createSpotHeaderTertiaryText'>Guests will only get your exact address once they booked a reservation.</a>
                     </div>
@@ -88,8 +94,8 @@ const NewSpotForm = ({ spot }) => {
                             <hr />
                             <a className='createSpotHeaderSecondaryText'>Liven up your spot with photos</a>
                             <a className='createSpotHeaderTertiaryText'>Submit a link to at least one photo to publish your spot.</a>
-                            <div className='createSpotImageURLDiv'> 
-                            {/* refactor this code */}
+                            <div className='createSpotImageURLDiv'>
+                                {/* refactor this code */}
                                 {imageURLs.map((url, index) => (
                                     <input
                                         key={index}

@@ -34,6 +34,13 @@
     background-color: rgb(255, 90, 95);
 }
 
+#loginButtonErr {
+    margin-top: -5px;
+    height: 50px;
+    box-shadow: 5px 5px 0px gray;
+    background-color: rgb(255, 90, 95);
+}
+
 #demoUserButton {
     margin-top: 30px;
     font-size: 20px;

@@ -33,6 +33,10 @@ function LoginFormModal() {
             .then(closeModal)
     }
 
+    const handleButtonDisable = () => {
+        return (credential.length < 4 || password.length < 6) 
+    }
+
 
     return (
         <>
@@ -63,7 +67,8 @@ function LoginFormModal() {
                             required
                         />
                     </label>
-                    <button type="submit" id='loginButton'>Log In</button>
+                   {errors && <button type="submit" id='loginButtonErr' disabled={handleButtonDisable()}>Log In</button>}
+                   {!errors && <button type="submit" id='loginButton' disabled={handleButtonDisable()}>Log In</button>}
                 </form>
                 <button type="submit" id='demoUserButton' onClick={handleDemoUser}>Demo User</button>
             </div>
