@@ -37,9 +37,13 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword: "Passwords must match"
     });
   };
+
+  const handleButtonDisable = () => {
+    return (!email || ! username || !firstName || !lastName || !password || !confirmPassword || password.length < 6 || username.length < 4 ||confirmPassword.length < 6)
+  }
 
   return (
     <>
@@ -123,8 +127,7 @@ function SignupFormModal() {
               required
             />
           </label>
-
-          <button id='signUpButton' type="submit">Sign Up</button>
+          <button id='signUpButton' type="submit" disabled={handleButtonDisable()} className={handleButtonDisable() ? 'disabledButton' : ''}>Sign Up</button>
         </form>
       </div>
     </>

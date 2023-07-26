@@ -15,8 +15,6 @@ function LoginFormModal() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
-        console.log('cred:', credential)
-        console.log('pass:', password);
         return dispatch(sessionActions.login({ credential, password }))
             .then(closeModal)
             .catch(async (res) => {
@@ -70,7 +68,7 @@ function LoginFormModal() {
                    {errors && <button type="submit" id='loginButtonErr' disabled={handleButtonDisable()}>Log In</button>}
                    {!errors && <button type="submit" id='loginButton' disabled={handleButtonDisable()}>Log In</button>}
                 </form>
-                <button type="submit" id='demoUserButton' onClick={handleDemoUser}>Demo User</button>
+                <button type="submit" id='demoUserButton' onClick={handleDemoUser}>Log in as Demo User</button>
             </div>
         </>
     );

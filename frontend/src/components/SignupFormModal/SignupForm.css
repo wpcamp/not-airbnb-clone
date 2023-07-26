@@ -19,7 +19,11 @@
     top: 50px;
     border-radius: 10;
     gap: 10px;
+}
 
+#signUpButton.disabledButton {
+    background-color: lightgrey;
+    color: grey;
 }
 
 #emailInput, #usernameInputSign, #firstInput, #lastInput, #passwordInputSign, #confirmPasswordInput {
@@ -29,11 +33,12 @@
 }
 
 #signUpButton {
-    margin-top: 25px;
+    margin-top: 0px;
+    margin-bottom: 15px;
     height: 50px;
-    box-shadow: 5px 5px 0px gray;
+    box-shadow: 2px 2px 0px gray;
     background-color: rgb(255, 90, 95);
-    width: 400px;
+    width: 410px;
 }
 
 /* need to fix errors so that it doesn't push everything down and errors show at the top of the screen */
