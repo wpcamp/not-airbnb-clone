@@ -109,11 +109,13 @@ export const thunkCreateSpot = (spot) => async (dispatch) => {
         const newSpot = await res.json();
         dispatch(createSpot(newSpot))
         return newSpot;
-    }else{
+    }
+    if (!res.ok){
         const errors = await res.json()
-        return errors;
+        return errors.errors;
     }
 }
+
 
 /* spotReducer */
 
@@ -127,10 +129,10 @@ const spotsReducer = (state = {}, action) => {
             })
             return spotsState;
         case GET_SPOT:
-            newState = { ...state, [action.spot.id]:action.spot }
+            newState = { ...state, [action.spot.id]: action.spot }
             return newState
         case CREATE_SPOT:
-            newState = { ...state, [action.spot.id]: action.spot}
+            newState = { ...state, [action.spot.id]: action.spot }
             return newState
         case REMOVE_SPOT:
             newState = { ...state }
