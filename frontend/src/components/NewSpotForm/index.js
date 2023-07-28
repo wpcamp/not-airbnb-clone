@@ -95,7 +95,7 @@ const NewSpotForm = ({ spot }) => {
                                         {errors.state && <p className='newSpotError'><p className='newSpotErrorNotNormal'>State</p> {errors.state}</p>}
                                         {!errors.state && <p className='newSpotErrorNormal'>State</p>}
                                     </div>
-                                    <input type='text' className='inputExc' placeholder='State' value={state} onChange={e => setState(e.target.value)} />
+                                    <input type='text' className='inputExc'placeholder='State' value={state} onChange={e => setState(e.target.value)} />
                                 </div>
                             </div>
                             <hr />
