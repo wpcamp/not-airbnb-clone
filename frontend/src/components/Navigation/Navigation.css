@@ -29,6 +29,7 @@
     position: relative;
     background-color: transparent;
     border-radius: 25px;
+    cursor: pointer;
     
 }
 
@@ -90,13 +91,16 @@
 #modalButton-logsign {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 #logo {
     width: 150px;
     height: 50px;
+    cursor: pointer;
 }
 
 li {
     list-style-type: none;
 }
+

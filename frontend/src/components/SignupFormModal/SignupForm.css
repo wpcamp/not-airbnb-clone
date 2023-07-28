@@ -39,6 +39,7 @@
     box-shadow: 2px 2px 0px gray;
     background-color: rgb(255, 90, 95);
     width: 410px;
+    cursor: pointer;
 }
 
 /* need to fix errors so that it doesn't push everything down and errors show at the top of the screen */

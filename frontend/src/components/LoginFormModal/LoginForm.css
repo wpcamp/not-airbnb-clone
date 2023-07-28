@@ -39,6 +39,7 @@
     height: 50px;
     box-shadow: 5px 5px 0px gray;
     background-color: rgb(255, 90, 95);
+
 }
 
 #demoUserButton {
@@ -48,6 +49,7 @@
     border: none;
     text-decoration: underline;
     color: rgb(0, 76, 139);
+
 }
 
 #errorsLogIn {

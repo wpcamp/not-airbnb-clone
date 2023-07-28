@@ -1,1 +1,12 @@
 /* TODO Add site wide styles */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+
+*{
+    font-family: 'Quicksand', sans-serif;;
+}
+
+
+button {
+    cursor: pointer;
+}
