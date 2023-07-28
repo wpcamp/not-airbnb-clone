@@ -10,7 +10,7 @@ const SpotIndexItem = ({ spot }) => {
         history.push(`/spots/${spot?.id}`)
     }
     return (
-        <div onClick={routeSpot} >
+        <div onClick={routeSpot} title={spot.name} id="spotIndexPoint">
             <div id="spotImageContainer" key={spot?.id} >
                 <img src={spot?.previewImage} width={300} height={300}></img>
             </div>

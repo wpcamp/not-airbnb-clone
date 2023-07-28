@@ -4,6 +4,8 @@
     gap: 5px;
 }
 
+
+
 .hostDescriptionReserveDiv {
     display: grid;
     grid-template-columns: 70% 30%;
