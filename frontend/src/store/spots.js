@@ -6,6 +6,7 @@ export const GET_SPOT = 'spots/GET_SPOT'
 export const UPDATE_SPOT = 'spots/UPDATE_SPOT'
 export const REMOVE_SPOT = 'spots/REMOVE_SPOT'
 export const CREATE_SPOT = 'spots/CREATE_SPOT'
+export const MANAGE_SPOTS = 'spots/MANAGE_SPOTS'
 
 export const getSpots = (spots) => {
     return {
@@ -13,6 +14,13 @@ export const getSpots = (spots) => {
         spots
     };
 };
+
+export const manageSpots = (spots) => {
+    return {
+        type: MANAGE_SPOTS,
+        spots
+    }
+}
 
 export const createSpot = (spot) => ({
     type: CREATE_SPOT,
@@ -38,7 +46,7 @@ export const removeSpot = (spotId) => ({
 /* Thunk Action Creators: */
 
 export const thunkGetSpots = () => async dispatch => {
-    const res = await csrfFetch('/api/spots', {
+    const res = await csrfFetch('/api/spots/', {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
@@ -48,6 +56,19 @@ export const thunkGetSpots = () => async dispatch => {
     if (res.ok) {
         const spots = await res.json()
         dispatch(getSpots(spots.Spots))
+    }
+}
+
+export const thunkManageSpots = () => async dispatch => {
+    const res = await csrfFetch('/api/spots/current', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    if (res.ok) {
+        const spots = await res.json()
+        dispatch(manageSpots(spots))
     }
 }
 
@@ -128,6 +149,12 @@ const spotsReducer = (state = {}, action) => {
                 spotsState[spot.id] = spot
             })
             return spotsState;
+        case MANAGE_SPOTS:
+            newState = {}
+            action.spots.forEach((spot) => {
+                newState[spot.id] = spot
+            })
+            return newState
         case GET_SPOT:
             newState = { ...state, [action.spot.id]: action.spot }
             return newState

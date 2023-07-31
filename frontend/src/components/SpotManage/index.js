@@ -1,4 +1,4 @@
-import { thunkGetSpots, thunkGetSpot, thunkRemoveSpot } from "../../store/spots";
+import { thunkGetSpots, thunkGetSpot, thunkRemoveSpot, thunkManageSpots } from "../../store/spots";
 import { Link, useHistory } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,7 +30,7 @@ const SpotManage = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(thunkGetSpots())
+        dispatch(thunkManageSpots())
     }, [dispatch])
 
     const createSpotAction = () => {

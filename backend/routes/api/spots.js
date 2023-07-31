@@ -297,7 +297,7 @@ router.get('/:spotId', async (req, res) => {
 })
 
 //get all spots
-router.get('', async (req, res) => {
+router.get('/', async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
     const pagination = {}
     page = parseInt(page)
@@ -356,15 +356,16 @@ router.get('', async (req, res) => {
             price: {
                 [Op.between]: [minPrice, maxPrice]
             },
-            lat: {
-                [Op.between]: [minLat, maxLat]
-            },
-            lng: {
-                [Op.between]: [minLng, maxLng]
-            }
+            // lat: {
+            //     [Op.between]: [minLat, maxLat]
+            // },
+            // lng: {
+            //     [Op.between]: [minLng, maxLng]
+            // }
         },
         ...pagination
     });
+    
     const allSpotsWithAvgStar = [];
     // for each spot w/in allSpots where id matches store the SpotImage.url
     for (const spot of allSpots) {

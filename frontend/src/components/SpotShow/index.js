@@ -48,7 +48,7 @@ export const SpotShow = () => {
 
     console.log('user: ', user)
     console.log('reviews: ', reviews);
-    console.log('spot: ',spot );
+    console.log('spot: ', spot);
 
     return (
         <>
@@ -84,13 +84,15 @@ export const SpotShow = () => {
                     <div className="priceReserveDiv">
                         <div id='priceReviewsDiv'>
                             <a>${spot && spot?.price} per night</a>
-                            {(reviews.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} reviews</a>}
-                            {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} review</a>}
-                           {/* BELOW LINE supposed to show new if user logged in and their spot has no reviews */}
-                            {/* {((reviews.length === 0) && (user.user.id === spot.ownerId)) && <a><i className="fa-solid fa-star"></i> New</a>} */}
+                            {reviews.length > 1
+                                ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews</a>
+                                : reviews.length === 1
+                                    ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review</a>
+                                    : <a><i className="fa-solid fa-star"></i> New</a>
+                            }
                         </div>
                         <div className="reserveButtonDiv">
-                            <button id='reserveButton' type="submit" onClick={()=> reserveClick()}>RESERVE</button>
+                            <button id='reserveButton' type="submit" onClick={() => reserveClick()}>RESERVE</button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +110,6 @@ export const SpotShow = () => {
                                     <div id='reviewUserName'>
                                         {spot && review?.User?.firstName}
                                     </div>
-
                                     <div id='reviewDate'>
                                         {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
                                     </div>
