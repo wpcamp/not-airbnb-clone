@@ -43,7 +43,6 @@ function LoginFormModal() {
                 {errors.credential && (
                     <p id='errorsLogIn'>{errors.credential}</p>
                 )}
-
                 <form className='loginForm' onSubmit={handleSubmit}>
                     <label >
                         <input
