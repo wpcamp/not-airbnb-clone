@@ -15,7 +15,6 @@ const NewSpotForm = ({ spot }) => {
     const [price, setPrice] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [title, setTitle] = useState('')
     const [imageURLs, setImageURLs] = useState(['', '', '', '', ''])
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
@@ -28,6 +27,7 @@ const NewSpotForm = ({ spot }) => {
             setErrors({});
             try {
                 const newSpot = await dispatch(thunkCreateSpot(spotData));
+                console.log('new spot:', newSpot)
                 history.push(`/spots/${newSpot.id}`);
             } catch (error) {
                 const data = await error.json();

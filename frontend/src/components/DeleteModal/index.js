@@ -25,6 +25,7 @@ function DeleteSpotModal({ spotId }) {
         e.preventDefault()
         dispatch(thunkRemoveSpot(spotId))
         closeModal()
+
     }
 
     return (
@@ -56,6 +57,8 @@ function DeleteReviewModal({ reviewId }) {
         e.preventDefault()
         dispatch(thunkRemoveReview(reviewId))
         closeModal()
+        //reloads the page after deletion, is there a better way to do this?
+        history.go(0)
     }
 
     return (
