@@ -46,6 +46,10 @@ export const SpotShow = () => {
         return window.alert('Feature coming soon!')
     }
 
+    console.log('user: ', user)
+    console.log('reviews: ', reviews);
+    console.log('spot: ',spot );
+
     return (
         <>
             <div>
@@ -82,6 +86,8 @@ export const SpotShow = () => {
                             <a>${spot && spot?.price} per night</a>
                             {(reviews.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} reviews</a>}
                             {(reviews.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)}  	•    {spot && spot?.numReviews} review</a>}
+                           {/* BELOW LINE supposed to show new if user logged in and their spot has no reviews */}
+                            {/* {((reviews.length === 0) && (user.user.id === spot.ownerId)) && <a><i className="fa-solid fa-star"></i> New</a>} */}
                         </div>
                         <div className="reserveButtonDiv">
                             <button id='reserveButton' type="submit" onClick={()=> reserveClick()}>RESERVE</button>

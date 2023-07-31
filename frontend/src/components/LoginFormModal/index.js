@@ -27,12 +27,12 @@ function LoginFormModal() {
 
     const handleDemoUser = (e) => {
         e.preventDefault()
-        return dispatch(sessionActions.login({ credential:'Demo-lition', password:'password' }))
+        return dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
             .then(closeModal)
     }
 
     const handleButtonDisable = () => {
-        return (credential.length < 4 || password.length < 6) 
+        return (credential.length < 4 || password.length < 6)
     }
 
 
@@ -65,8 +65,12 @@ function LoginFormModal() {
                             required
                         />
                     </label>
-                   {errors && <button type="submit" id='loginButtonErr' disabled={handleButtonDisable()}>Log In</button>}
-                   {!errors && <button type="submit" id='loginButton' disabled={handleButtonDisable()}>Log In</button>}
+                    {/* FIX BELOW, not always working  */}
+                    {errors.credential || errors.password || credential.length < 4 || password.length < 6 ? (
+                        <button type="submit" id='loginButtonErr' disabled={handleButtonDisable()}>Log In</button>
+                    ) : (
+                        <button type="submit" id='loginButton' disabled={handleButtonDisable()}>Log In</button>
+                    )}
                 </form>
                 <button type="submit" id='demoUserButton' onClick={handleDemoUser}>Log in as Demo User</button>
             </div>
