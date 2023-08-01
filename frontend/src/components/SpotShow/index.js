@@ -64,12 +64,12 @@ export const SpotShow = () => {
                         {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={500} height={500}></img>}
                     </div>
                     <div className="secondColSpotImages">
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[1]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[2]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                     <div className="thirdColSpotImages">
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[3]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[4]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
                     </div>
                 </div>
                 <div className="hostDescriptionReserveDiv">

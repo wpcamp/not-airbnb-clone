@@ -7,6 +7,7 @@ export const UPDATE_SPOT = 'spots/UPDATE_SPOT'
 export const REMOVE_SPOT = 'spots/REMOVE_SPOT'
 export const CREATE_SPOT = 'spots/CREATE_SPOT'
 export const MANAGE_SPOTS = 'spots/MANAGE_SPOTS'
+export const CREATE_IMAGE = 'spots/CREATE_IMAGE'
 
 export const getSpots = (spots) => {
     return {
@@ -21,6 +22,11 @@ export const manageSpots = (spots) => {
         spots
     }
 }
+
+export const createImage = (image) => ({
+    type: CREATE_IMAGE,
+    image
+})
 
 export const createSpot = (spot) => ({
     type: CREATE_SPOT,
@@ -58,6 +64,7 @@ export const thunkGetSpots = () => async dispatch => {
         dispatch(getSpots(spots.Spots))
     }
 }
+
 
 export const thunkManageSpots = () => async dispatch => {
     const res = await csrfFetch('/api/spots/current', {
@@ -122,7 +129,7 @@ export const thunkUpdateSpot = (spot) => async dispatch => {
 export const thunkCreateSpot = (spot) => async (dispatch) => {
     const res = await csrfFetch('/api/spots', {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(spot)
     })
 
@@ -131,9 +138,26 @@ export const thunkCreateSpot = (spot) => async (dispatch) => {
         dispatch(createSpot(newSpot))
         return newSpot;
     }
-    if (!res.ok){
+    if (!res.ok) {
         const errors = await res.json()
-        return errors.errors;
+        return errors;
+    }
+}
+
+export const thunkCreateImage = (spotId, image) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(image)
+    })
+
+    if (res.ok) {
+        const newImage = await res.json()
+        dispatch(createImage(newImage))
+        return newImage;
+    } else {
+        const errors = await res.json()
+        return errors
     }
 }
 
@@ -167,6 +191,8 @@ const spotsReducer = (state = {}, action) => {
             return newState
         case UPDATE_SPOT:
             return { ...state, [action.spot.id]: action.spot }
+        case CREATE_IMAGE:
+            return {...state,[action.image.id]: action.image}
         default:
             return state
     }

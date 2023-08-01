@@ -114,8 +114,8 @@ const validateSpotImage = [
         .notEmpty()
         .withMessage("Must provide a valid URL"),
     check("preview")
-        .exists({ checkFalsy: true })
-        .withMessage("Must indicate whether or not preview exists")
+        // .exists({ checkFalsy: true })
+        // .withMessage("Must indicate whether or not preview exists")
         .notEmpty()
         .withMessage("Must indicate whether or not preview exists"),
     handleValidationErrors
