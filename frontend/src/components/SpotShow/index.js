@@ -97,6 +97,7 @@ export const SpotShow = () => {
                     </div>
                 </div>
                 <div>
+                {(!reviews?.length) && <a><i className="fa-solid fa-star"></i> New </a>}
                     {(reviews?.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
                     {(reviews?.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
                 </div>
