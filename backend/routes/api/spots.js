@@ -356,12 +356,6 @@ router.get('/', async (req, res) => {
             price: {
                 [Op.between]: [minPrice, maxPrice]
             },
-            // lat: {
-            //     [Op.between]: [minLat, maxLat]
-            // },
-            // lng: {
-            //     [Op.between]: [minLng, maxLng]
-            // }
         },
         ...pagination
     });

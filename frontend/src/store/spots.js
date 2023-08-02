@@ -8,6 +8,7 @@ export const REMOVE_SPOT = 'spots/REMOVE_SPOT'
 export const CREATE_SPOT = 'spots/CREATE_SPOT'
 export const MANAGE_SPOTS = 'spots/MANAGE_SPOTS'
 export const CREATE_IMAGE = 'spots/CREATE_IMAGE'
+export const CREATE_REVIEW = 'spots/CREATE_REVIEW'
 
 export const getSpots = (spots) => {
     return {
@@ -26,6 +27,11 @@ export const manageSpots = (spots) => {
 export const createImage = (image) => ({
     type: CREATE_IMAGE,
     image
+})
+
+export const createReview = (review) => ({
+    type: CREATE_REVIEW, 
+    review
 })
 
 export const createSpot = (spot) => ({
@@ -161,6 +167,22 @@ export const thunkCreateImage = (spotId, image) => async dispatch => {
     }
 }
 
+export const thunkCreateReview = (spotId, review) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(review)
+    })
+
+    if (res.ok) {
+        const newReview = await res.json()
+        dispatch(createReview(newReview))
+        return newReview;
+    } else {
+        const errors = await res.json()
+        return errors
+    }
+}
 
 /* spotReducer */
 
@@ -193,6 +215,8 @@ const spotsReducer = (state = {}, action) => {
             return { ...state, [action.spot.id]: action.spot }
         case CREATE_IMAGE:
             return {...state,[action.image.id]: action.image}
+        case CREATE_REVIEW:
+            return {...state, [action.review.id]: action.review}
         default:
             return state
     }

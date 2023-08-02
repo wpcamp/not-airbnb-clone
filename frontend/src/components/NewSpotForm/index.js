@@ -41,6 +41,8 @@ const NewSpotForm = ({ spot }) => {
                 await dispatch(thunkCreateImage(newSpot.id, img4));
                 await dispatch(thunkCreateImage(newSpot.id, img5));
                 await dispatch(thunkGetSpot(newSpot.id));
+            }
+            if (newSpot.id) {
                 history.push(`/spots/${newSpot.id}`);
             }
         } catch (error) {
