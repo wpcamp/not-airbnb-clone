@@ -90,7 +90,7 @@ const SpotUpdate = () => {
                         data.errors.city = 'City is required';
                     }
                     if (data.errors.state) {
-                        data.errors.state = 'State is required';
+                        data.errors.state = 'State required (VT/Vermont)';
                     }
                     if (data.errors.description) {
                         data.errors.description = 'Description needs a minimum of 30 characters';

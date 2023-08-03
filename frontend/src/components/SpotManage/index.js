@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import { csrfFetch } from "../../store/csrf";
-import {DeleteSpotModal} from "../DeleteModal";
+import { DeleteSpotModal } from "../DeleteModal";
 import './SpotManage.css'
 
 const SpotManage = () => {
@@ -37,6 +37,10 @@ const SpotManage = () => {
         history.push('/spots/new')
     }
 
+
+
+
+
     return (
         <>
             <div id="manageSpotsHeader">
@@ -48,12 +52,15 @@ const SpotManage = () => {
             <ul className="spotContainer">
                 {filteredSpots.map((spot) => (
                     <div key={spot?.id}>
-                        <div id="spotImageContainer">
+                        <div id="spotImageContainer" onClick={() => {
+                            history.push(`/spots/${spot?.id}`)
+                        }}>
                             <img src={spot?.previewImage} width={300} height={300} alt="Spot Preview"></img>
                         </div>
                         <div id="spotDetailsContainer">
                             <a>{spot?.city}, {spot?.state}</a>
-                            <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)}</a>
+                            {spot?.avgRating && <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)}</a>}
+                            {!spot?.avgRating && <a><i className="fa-solid fa-star"></i> New </a>}
                         </div>
                         <div id="spotPriceContainer">
                             <a>${spot?.price} per night</a>
@@ -66,7 +73,7 @@ const SpotManage = () => {
                             <li id='deleteButtonSpot'>
                                 <OpenModalButton
                                     buttonText="Delete"
-                                    modalComponent={<DeleteSpotModal spotId={spot.id}/>}
+                                    modalComponent={<DeleteSpotModal spotId={spot.id} />}
                                 />
                             </li>
                         </div>

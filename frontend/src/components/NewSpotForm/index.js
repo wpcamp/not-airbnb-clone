@@ -30,10 +30,10 @@ const NewSpotForm = ({ spot }) => {
         const spotData = { country, address, city, state, price, description, name, SpotImages: [] };
         try {
             let img1 = { ["url"]: image1, ["preview"]: 1 }
-            let img2 = { ["url"]: image2, ["preview"]: 0 }
-            let img3 = { ["url"]: image3, ["preview"]: 0 }
-            let img4 = { ["url"]: image4, ["preview"]: 0 }
-            let img5 = { ["url"]: image5, ["preview"]: 0 }
+            let img2 = { ["url"]: image2 || image1, ["preview"]: 0 }
+            let img3 = { ["url"]: image3 || image1, ["preview"]: 0 }
+            let img4 = { ["url"]: image4 || image1, ["preview"]: 0 }
+            let img5 = { ["url"]: image5 || image1, ["preview"]: 0 }
             const newSpot = await dispatch(thunkCreateSpot(spotData));
             if (newSpot.id) {
                 await dispatch(thunkCreateImage(newSpot.id, img1));
@@ -63,7 +63,7 @@ const NewSpotForm = ({ spot }) => {
                     newErrors.price = 'Price must be above $0.00';
                 }
                 if (data.errors.state) {
-                    newErrors.state = 'State is required';
+                    newErrors.state = 'State required (VT/Vermont)';
                 }
                 if (data.errors.description) {
                     newErrors.description = 'Description needs a minimum of 30 characters';
@@ -158,7 +158,7 @@ const NewSpotForm = ({ spot }) => {
                             <div className='createSpotImageURLDiv'>
                                 {errors.previewImg && <p id='descripErr'>{errors.previewImg}</p>}
                                 <input
-                                    type="text"
+                                    type="url"
                                     placeholder="Preview Image"
                                     value={image1}
                                     onChange={(e) => setImage1(e.target.value)}
@@ -167,7 +167,7 @@ const NewSpotForm = ({ spot }) => {
                                     type="text"
                                     placeholder="Image URL"
                                     value={image2}
-                                    onChange={(e) => setImage2(e.target.value)}
+                                    onChange={(e) => { setImage2(e.target.value) }}
                                 />
                                 <input
                                     type="text"
@@ -176,13 +176,13 @@ const NewSpotForm = ({ spot }) => {
                                     onChange={(e) => setImage3(e.target.value)}
                                 />
                                 <input
-                                    type="text"
+                                    type="url"
                                     placeholder="Image URL"
                                     value={image4}
                                     onChange={(e) => setImage4(e.target.value)}
                                 />
                                 <input
-                                    type="text"
+                                    type="url"
                                     placeholder="Image URL"
                                     value={image5}
                                     onChange={(e) => setImage5(e.target.value)}
@@ -190,7 +190,7 @@ const NewSpotForm = ({ spot }) => {
                             </div>
                             <hr />
                             <div id='createNewSpotSubmitButtonDiv'>
-                                <button id='createNewSpotSubmitButton' type="submit">Create Spot</button>
+                                <button id='createNewSpotSubmitButton' type="submit" >Create Spot</button>
                             </div>
                         </form>
                     </div>
