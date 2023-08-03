@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import './NewSpotForm.css'
 import { thunkCreateSpot, thunkUpdateSpot, thunkCreateImage, thunkGetSpot } from '../../store/spots';
 import { login } from '../../store/session';
+import { useEffect } from 'react';
 
 
 const NewSpotForm = ({ spot }) => {

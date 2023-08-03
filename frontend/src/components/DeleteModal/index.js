@@ -5,11 +5,9 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkRemoveSpot, thunkGetSpots } from "../../store/spots";
 import "./DeleteModal.css";
-import { useEffect } from "react";
 import { thunkRemoveReview } from "../../store/reviews";
-import { useSelector } from "react-redux";
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import {forceUpdate} from 'react'
+
 
 
 
@@ -57,7 +55,7 @@ function DeleteReviewModal({ reviewId }) {
         e.preventDefault()
         dispatch(thunkRemoveReview(reviewId))
         closeModal()
-        //reloads the page after deletion, is there a better way to do this?
+
         history.go(0)
     }
 
@@ -71,7 +69,6 @@ function DeleteReviewModal({ reviewId }) {
                 <div id="yesNoButtons">
                     <button type="submit" id='deleteModalYesButton' onClick={(e) => {
                         deleteReview(e, reviewId)
-                        history.push(-1)
                         }}>Yes (Delete Review)</button>
                     <button type="submit" id='deleteModalNoButton' onClick={keepReview}>No (Keep Review)</button>
                 </div>

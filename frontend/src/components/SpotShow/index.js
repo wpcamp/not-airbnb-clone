@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { thunkGetSpot } from "../../store/spots";
+import { thunkGetSpot, thunkCreateReview } from "../../store/spots";
 import { useEffect, useState } from "react";
 import './SpotShow.css'
 import { csrfFetch } from "../../store/csrf";
+import { CreateReviewModal } from "../CreateReviewModal";
 import OpenModalButton from "../OpenModalButton";
 import { DeleteSpotModal, DeleteReviewModal } from "../DeleteModal";
 
@@ -14,7 +15,6 @@ export const SpotShow = () => {
     const spot = useSelector((state) => state.spots[spotId])
     const [reviews, setReviews] = useState([])
     const [user, setUser] = useState(null)
-
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
@@ -31,7 +31,6 @@ export const SpotShow = () => {
         validateUser();
     }, []);
 
-
     useEffect(() => {
         const fetchSpotReviews = async () => {
             const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
@@ -46,9 +45,10 @@ export const SpotShow = () => {
         return window.alert('Feature coming soon!')
     }
 
-    console.log('user: ', user)
-    console.log('reviews: ', reviews);
-    console.log('spot: ', spot);
+    // console.log('user: ', user)
+    // console.log('reviews: ', reviews);
+    // console.log('spot: ', spot);
+
 
     return (
         <>
@@ -97,38 +97,57 @@ export const SpotShow = () => {
                     </div>
                 </div>
                 <div>
-                {(!reviews?.length) && <a><i className="fa-solid fa-star"></i> New </a>}
+                    {(!reviews?.length) && <a><i className="fa-solid fa-star"></i> New </a>}
                     {(reviews?.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
                     {(reviews?.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
                 </div>
                 <div>
-                    {(!reviews || reviews.length === 0) ? (
-                        <div>No Reviews Yet.</div>
-                    ) : (
-                        spot && reviews.map(review => {
-                            return (
-                                <div key={review?.id}>
-                                    <div id='reviewUserName'>
-                                        {spot && review?.User?.firstName}
-                                    </div>
-                                    <div id='reviewDate'>
-                                        {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
-                                    </div>
-                                    <div id='reviewReview'>
-                                        {spot && review?.review}
-                                        {(review?.userId === user?.user?.id) && (
-                                            <div id="userReviewDeleteButton">
-                                                <OpenModalButton
-                                                    buttonText="Delete"
-                                                    modalComponent={<DeleteReviewModal reviewId={review?.id} />}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
+                    {((user?.user && spot?.ownerId !== user?.user?.id && (!reviews?.find(review => review?.userId === user?.user?.id)) && reviews.length === 0)
+                        &&
+                        <div className='postReviewButton'>
+                            <div>
+                                <OpenModalButton
+                                    buttonText="Post Your review"
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} />}
+                                />
+                            </div>
+                            <div>
+                                <a id='postReviewText'>Be the first to post a review</a>
+                            </div>
+                        </div>)
+                        ||
+                        ((user?.user && spot?.ownerId !== user?.user?.id && (!reviews?.find(review => review?.userId === user?.user?.id)))
+                            &&
+                            <div className='postReviewButton'>
+                                <OpenModalButton
+                                    className='postReviewButton'
+                                    buttonText="Post Your review"
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} />}
+                                /></div>)
+                    }
+                    {spot && reviews.map(review => {
+                        return (
+                            <div key={review?.id}>
+                                <div id='reviewUserName'>
+                                    {spot && review?.User?.firstName}
                                 </div>
-                            );
-                        })
-                    )}
+                                <div id='reviewDate'>
+                                    {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
+                                </div>
+                                <div id='reviewReview'>
+                                    {spot && review?.review}
+                                    {(review?.userId === user?.user?.id) && (
+                                        <div id="userReviewDeleteButton">
+                                            <OpenModalButton
+                                                buttonText="Delete"
+                                                modalComponent={<DeleteReviewModal reviewId={review?.id} />}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </>

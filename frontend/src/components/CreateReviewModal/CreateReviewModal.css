@@ -1,0 +1,56 @@
+#createReviewModal {
+    border: 3px black solid;
+    border-radius: 10px;
+}
+
+#createReviewHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+#createReviewTextArea{
+    margin: 5px 20px 5px 20px;
+    border: 2px black solid;
+}
+
+.createReviewStarsDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 25px;
+}
+
+.rev-star {
+    font-size: 25px;
+}
+
+#starsText {
+    padding-left: 7px;
+}
+
+#createReviewButton {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+}
+
+#disabledButton {
+    width: 390px;
+    height: 40px;
+    box-shadow: 3px 3px grey;
+    background-color: white;
+    color: grey;
+}
+
+#notDisabledButton {
+    width: 390px;
+    height: 40px;
+    box-shadow: 3px 3px black;
+    background-color: rgb(255, 90, 95);
+    color: white;
+}
