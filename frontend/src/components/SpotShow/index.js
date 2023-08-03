@@ -1,16 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { thunkGetSpot, thunkCreateReview } from "../../store/spots";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import './SpotShow.css'
 import { csrfFetch } from "../../store/csrf";
+import { thunkGetSpot } from "../../store/spots";
 import { CreateReviewModal } from "../CreateReviewModal";
 import OpenModalButton from "../OpenModalButton";
-import { DeleteSpotModal, DeleteReviewModal } from "../DeleteModal";
+import { DeleteReviewModal } from "../DeleteModal";
+import './SpotShow.css'
 
 export const SpotShow = () => {
     const { spotId } = useParams()
-    const history = useHistory()
     const dispatch = useDispatch()
     const spot = useSelector((state) => state.spots[spotId])
     const [reviews, setReviews] = useState([])
@@ -44,11 +43,6 @@ export const SpotShow = () => {
     const reserveClick = () => {
         return window.alert('Feature coming soon!')
     }
-
-    // console.log('user: ', user)
-    // console.log('reviews: ', reviews);
-    // console.log('spot: ', spot);
-
 
     return (
         <>

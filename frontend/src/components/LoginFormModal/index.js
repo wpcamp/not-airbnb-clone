@@ -35,7 +35,6 @@ function LoginFormModal() {
         return (credential.length < 4 || password.length < 6)
     }
 
-
     return (
         <>
             <div id='loginModal'>
@@ -64,7 +63,6 @@ function LoginFormModal() {
                             required
                         />
                     </label>
-                    {/* FIX BELOW, not always working  */}
                     {errors.credential || errors.password || credential.length < 4 || password.length < 6 ? (
                         <button type="submit" id='loginButtonErr' disabled={handleButtonDisable()}>Log In</button>
                     ) : (

@@ -12,9 +12,9 @@ function OpenModalButton({
     const { setModalContent, setOnModalClose } = useModal();
     let buttonId = 'modalButton-logsign'
     if (buttonText === 'Delete') {
-        buttonId='modalButton-delete'
-    }else{
-        buttonId='modalButton-logsign'
+        buttonId = 'modalButton-delete'
+    } else {
+        buttonId = 'modalButton-logsign'
     }
     const onClick = () => {
         if (typeof onButtonClick === "function") onButtonClick();

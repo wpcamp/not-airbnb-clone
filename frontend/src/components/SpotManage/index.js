@@ -1,10 +1,10 @@
-import { thunkGetSpots, thunkGetSpot, thunkRemoveSpot, thunkManageSpots } from "../../store/spots";
-import { Link, useHistory } from 'react-router-dom'
+import { thunkManageSpots } from "../../store/spots";
+import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import OpenModalButton from "../OpenModalButton";
 import { csrfFetch } from "../../store/csrf";
 import { DeleteSpotModal } from "../DeleteModal";
+import OpenModalButton from "../OpenModalButton";
 import './SpotManage.css'
 
 const SpotManage = () => {
@@ -36,10 +36,6 @@ const SpotManage = () => {
     const createSpotAction = () => {
         history.push('/spots/new')
     }
-
-
-
-
 
     return (
         <>

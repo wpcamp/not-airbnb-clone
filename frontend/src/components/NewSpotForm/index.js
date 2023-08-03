@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { thunkCreateSpot, thunkCreateImage, thunkGetSpot } from '../../store/spots';
 import './NewSpotForm.css'
-import { thunkCreateSpot, thunkUpdateSpot, thunkCreateImage, thunkGetSpot } from '../../store/spots';
-import { login } from '../../store/session';
-import { useEffect } from 'react';
-
 
 const NewSpotForm = ({ spot }) => {
     const history = useHistory();

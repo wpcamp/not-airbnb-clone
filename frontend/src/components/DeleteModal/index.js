@@ -1,15 +1,10 @@
-
-import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkRemoveSpot, thunkGetSpots } from "../../store/spots";
-import "./DeleteModal.css";
+import { thunkRemoveSpot} from "../../store/spots";
 import { thunkRemoveReview } from "../../store/reviews";
-import { useHistory, useParams, useLocation } from "react-router-dom";
-
-
-
+import { useHistory} from "react-router-dom";
+import "./DeleteModal.css";
 
 function DeleteSpotModal({ spotId }) {
     const dispatch = useDispatch();
@@ -23,7 +18,6 @@ function DeleteSpotModal({ spotId }) {
         e.preventDefault()
         dispatch(thunkRemoveSpot(spotId))
         closeModal()
-
     }
 
     return (
@@ -55,7 +49,6 @@ function DeleteReviewModal({ reviewId }) {
         e.preventDefault()
         dispatch(thunkRemoveReview(reviewId))
         closeModal()
-
         history.go(0)
     }
 

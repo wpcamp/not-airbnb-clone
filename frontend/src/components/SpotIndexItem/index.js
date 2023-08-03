@@ -1,8 +1,4 @@
-import { thunkGetSpots, thunkGetSpot } from "../../store/spots";
-import { Link, useHistory } from 'react-router-dom'
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import {useHistory } from 'react-router-dom'
 
 const SpotIndexItem = ({ spot }) => {
     const history = useHistory()

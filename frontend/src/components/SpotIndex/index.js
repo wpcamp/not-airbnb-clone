@@ -1,20 +1,17 @@
-import { thunkGetSpots, thunkGetSpot } from "../../store/spots";
-import { Link, useHistory } from 'react-router-dom'
+import { thunkGetSpots } from "../../store/spots";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import './SpotIndex.css'
 import SpotIndexItem from "../SpotIndexItem";
+import './SpotIndex.css'
 
 const SpotIndex = () => {
     const spots = Object.values(useSelector((state) => (state.spots ? state.spots : [])))
     const dispatch = useDispatch()
-    const history = useHistory()
 
     useEffect(() => {
         dispatch(thunkGetSpots())
     }, [dispatch])
 
-   
     return (
         <>
             <ul className="spotContainer">

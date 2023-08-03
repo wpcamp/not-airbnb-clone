@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { thunkCreateSpot, thunkGetSpot, thunkUpdateSpot } from '../../store/spots';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkGetSpot, thunkUpdateSpot } from '../../store/spots';
+
+
 
 const SpotUpdate = () => {
     const history = useHistory();
@@ -28,51 +27,6 @@ const SpotUpdate = () => {
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
     }, [dispatch, spotId])
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     setErrors({});
-    //     const newSpot = { id: spotId, country, address, city, state, price, description, name }
-    //     const spot = await dispatch(thunkUpdateSpot(newSpot))
-    //     console.log(spot)
-    //     if (spot.errors) {
-    //         setErrors(spot.errors);
-    //         console.log(spot.errors)
-    //     } else {
-    //         history.push(`/spots/${spot.id}`)
-    //     }
-    // }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     const newSpot = { id: spotId, country, address, city, state, price, description, name }
-    //     console.log('SPOT:',newSpot)
-    //     if (newSpot) {
-    //         setErrors({});
-    //         try {
-    //             const spot = await dispatch(thunkUpdateSpot(newSpot))
-    //             history.push(`/spots/${spot.id}`)
-    //         } catch (error) {
-    //             const data = await error.json()
-    //             if (data && data.errors) {
-    //                 if (data.errors.city) {
-    //                     data.errors.city = 'City is required'
-    //                 }
-    //                 if (data.errors.state) {
-    //                     data.errors.state = 'State is required'
-    //                 }
-    //                 if (data.errors.description) {
-    //                     data.errors.description = 'Description needs a minimum of 30 characters'
-    //                 }
-    //                 if (data.errors.name) {
-    //                     data.errors.name = 'Name cannot be empty'
-    //                 }
-    //                 setErrors(spot.errors);
-    //                 console.log("ERRORS HERE: ", errors);
-    //             }
-    //         }
-    //     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -189,8 +143,6 @@ const SpotUpdate = () => {
         </>
     );
 };
-
-
 
 export default SpotUpdate;
 

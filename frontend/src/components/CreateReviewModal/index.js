@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkCreateReview } from "../../store/spots";
 import { csrfFetch } from "../../store/csrf";
-import "./CreateReviewModal.css"
 import { useHistory } from "react-router-dom";
+import "./CreateReviewModal.css"
 
 
 function CreateReviewModal({ spotId }) {
@@ -20,7 +19,6 @@ function CreateReviewModal({ spotId }) {
     const [reviewText, setReviewText] = useState('')
     const [errors, setErrors] = useState({})
     const history = useHistory()
-
     const { closeModal } = useModal()
 
     const getUser = async () => {
@@ -37,7 +35,6 @@ function CreateReviewModal({ spotId }) {
         };
         validateUser();
     }, []);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -148,6 +145,5 @@ function CreateReviewModal({ spotId }) {
         </>
     )
 }
-
 
 export { CreateReviewModal };
