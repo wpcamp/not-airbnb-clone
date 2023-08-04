@@ -36,9 +36,16 @@ function ProfileButton({ user }) {
         return () => document.removeEventListener("click", closeMenu);
     }, [showMenu]);
 
+    const logoutCloseMenu = () => {
+        setShowMenu(false)
+    }
+
+
     const logout = (e) => {
         e.preventDefault();
-        dispatch(sessionActions.logout()).then(history.push('/'))
+        dispatch(sessionActions.logout())
+        // logoutCloseMenu()
+        history.push('/')
     };
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

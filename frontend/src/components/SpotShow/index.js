@@ -122,7 +122,7 @@ export const SpotShow = () => {
                                     modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
                                 /></div>)
                     }
-                    {spot && reviews.map(review => {
+                    {spot && reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(review => {
                         return (
                             <div key={review?.id}>
                                 <div id='reviewUserName'>
