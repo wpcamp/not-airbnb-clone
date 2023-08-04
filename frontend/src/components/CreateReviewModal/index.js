@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkCreateReview } from "../../store/spots";
+import { thunkCreateReview, thunkGetSpot } from "../../store/spots";
 import { csrfFetch } from "../../store/csrf";
 import { useHistory } from "react-router-dom";
 import "./CreateReviewModal.css"
 
 
-function CreateReviewModal({ spotId }) {
+function CreateReviewModal({ spotId, reviewFunc }) {
     const dispatch = useDispatch()
     const [user, setUser] = useState(null)
     const [stars, setStars] = useState(0)
@@ -50,13 +50,15 @@ function CreateReviewModal({ spotId }) {
             const newRev = await dispatch(thunkCreateReview(spotId, review))
             if (newRev) {
                 closeModal()
+                reviewFunc(spotId)
             } else {
                 setErrors(newRev.errors)
             }
         } catch (errors) {
             console.log('here are the errors: ', errors);
         }
-        history.go(0)
+        dispatch(thunkGetSpot(spotId))
+
     }
 
     return (

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkRemoveSpot} from "../../store/spots";
+import { thunkRemoveSpot, thunkGetSpot} from "../../store/spots";
 import { thunkRemoveReview } from "../../store/reviews";
 import { useHistory} from "react-router-dom";
+import { csrfFetch } from "../../store/csrf";
 import "./DeleteModal.css";
+
 
 function DeleteSpotModal({ spotId }) {
     const dispatch = useDispatch();
@@ -36,7 +38,7 @@ function DeleteSpotModal({ spotId }) {
     );
 }
 
-function DeleteReviewModal({ reviewId }) {
+function DeleteReviewModal({ reviewId, spotId, reviewFunc }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const history = useHistory()
@@ -44,12 +46,13 @@ function DeleteReviewModal({ reviewId }) {
         e.preventDefault()
         closeModal()
     }
-
-    const deleteReview = (e, reviewId) => {
+    
+    const deleteReview = async (e, reviewId) => {
         e.preventDefault()
-        dispatch(thunkRemoveReview(reviewId))
+        await dispatch(thunkRemoveReview(reviewId))
         closeModal()
-        history.go(0)
+        reviewFunc(spotId)
+        dispatch(thunkGetSpot(spotId))
     }
 
     return (
@@ -62,6 +65,7 @@ function DeleteReviewModal({ reviewId }) {
                 <div id="yesNoButtons">
                     <button type="submit" id='deleteModalYesButton' onClick={(e) => {
                         deleteReview(e, reviewId)
+                        dispatch(thunkGetSpot(spotId))
                         }}>Yes (Delete Review)</button>
                     <button type="submit" id='deleteModalNoButton' onClick={keepReview}>No (Keep Review)</button>
                 </div>

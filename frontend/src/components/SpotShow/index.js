@@ -15,6 +15,12 @@ export const SpotShow = () => {
     const [reviews, setReviews] = useState([])
     const [user, setUser] = useState(null)
 
+    const fetchSpotReviews = async (spotId) => {
+        const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
+        const reviews = await res.json()
+        setReviews(reviews)
+    }
+
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
             method: 'GET'
@@ -31,18 +37,15 @@ export const SpotShow = () => {
     }, []);
 
     useEffect(() => {
-        const fetchSpotReviews = async () => {
-            const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
-            const reviews = await res.json()
-            setReviews(reviews)
-        }
         dispatch(thunkGetSpot(spotId))
-        fetchSpotReviews()
+        fetchSpotReviews(spotId)
     }, [dispatch, spotId])
 
     const reserveClick = () => {
         return window.alert('Feature coming soon!')
     }
+
+    console.log('spot here: ', spot);
 
     return (
         <>
@@ -102,7 +105,7 @@ export const SpotShow = () => {
                             <div>
                                 <OpenModalButton
                                     buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} />}
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
                                 />
                             </div>
                             <div>
@@ -116,7 +119,7 @@ export const SpotShow = () => {
                                 <OpenModalButton
                                     className='postReviewButton'
                                     buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} />}
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
                                 /></div>)
                     }
                     {spot && reviews.map(review => {
@@ -134,7 +137,7 @@ export const SpotShow = () => {
                                         <div id="userReviewDeleteButton">
                                             <OpenModalButton
                                                 buttonText="Delete"
-                                                modalComponent={<DeleteReviewModal reviewId={review?.id} />}
+                                                modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
                                             />
                                         </div>
                                     )}
