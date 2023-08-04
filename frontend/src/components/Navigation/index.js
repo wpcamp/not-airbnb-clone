@@ -8,7 +8,7 @@ import logo from '../../images/airbnb-logo.png'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
-    console.log('this is the user: ',sessionUser)
+    // console.log('this is the user: ',sessionUser)
     return (
         <>
             <ul className='navBar'>

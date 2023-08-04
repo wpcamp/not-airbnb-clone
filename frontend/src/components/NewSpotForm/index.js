@@ -72,7 +72,7 @@ const NewSpotForm = ({ spot }) => {
                     newErrors.previewImg = 'Preview Image required'
                 }
                 setErrors(newErrors);
-                console.log("ERRORS HERE: ", newErrors);
+                // console.log("ERRORS HERE: ", newErrors);
             }
         }
     };

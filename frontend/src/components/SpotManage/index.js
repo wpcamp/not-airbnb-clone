@@ -13,7 +13,7 @@ const SpotManage = () => {
     const history = useHistory()
     const [user, setUser] = useState(null)
     const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user?.id);
-    console.log('here are the spots:', filteredSpots)
+    // console.log('here are the spots:', filteredSpots)
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {

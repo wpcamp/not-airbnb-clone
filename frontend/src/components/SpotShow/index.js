@@ -45,7 +45,7 @@ export const SpotShow = () => {
         return window.alert('Feature coming soon!')
     }
 
-    console.log('spot here: ', spot);
+    // console.log('spot here: ', spot);
 
     return (
         <>

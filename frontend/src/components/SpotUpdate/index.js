@@ -31,7 +31,7 @@ const SpotUpdate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newSpot = { id: spotId, country, address, city, state, price, description, name };
-        console.log('SPOT:', newSpot);
+        // console.log('SPOT:', newSpot);
         if (newSpot) {
             setErrors({});
             try {
@@ -53,7 +53,7 @@ const SpotUpdate = () => {
                         data.errors.name = 'Name cannot be empty';
                     }
                     setErrors(data.errors);
-                    console.log("ERRORS HERE: ", data.errors);
+                    // console.log("ERRORS HERE: ", data.errors);
                 }
             }
         }
