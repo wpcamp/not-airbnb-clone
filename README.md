@@ -10,3 +10,26 @@ https://airbnb-api-proj.onrender.com/
 
 
 ![Screenshot 2023-08-04 at 4 52 25 PM](https://github.com/wpcamp/API-Project/assets/125541324/90b6bc6a-7c83-4a32-9a52-e05554ee6eb2)
+
+## Run App
+
+### Frontend Startup
+
+Enter the following into terminal while within frontend directory
+
+```bash
+npm start
+```
+
+This will run the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view NotAirBnB in the browser.
+
+### Backend Startup
+
+Enter following into terminal while within backend directory
+
+```bash
+npm start
+```
+
+---
