@@ -13,6 +13,7 @@ const SpotManage = () => {
     const history = useHistory()
     const [user, setUser] = useState(null)
     const filteredSpots = spots.filter((spot) => spot?.ownerId === user?.user?.id);
+    console.log('here are the spots:', filteredSpots)
 
     const getUser = async () => {
         const userResponse = await csrfFetch('/api/session', {
@@ -43,7 +44,7 @@ const SpotManage = () => {
                 Manage Spots
             </div>
             <div>
-                <button id='createSpotButton' onClick={createSpotAction}>Create a New Spot</button>
+                {!filteredSpots.length && <button id='createSpotButton' onClick={createSpotAction}>Create a New Spot</button>}
             </div>
             <ul className="spotContainer">
                 {filteredSpots.map((spot) => (

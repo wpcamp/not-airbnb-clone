@@ -156,7 +156,7 @@ const NewSpotForm = ({ spot }) => {
                                 {errors.previewImg && <p id='descripErr'>{errors.previewImg}</p>}
                                 <input
                                     type="url"
-                                    placeholder="Preview Image"
+                                    placeholder="Preview Image URL"
                                     value={image1}
                                     onChange={(e) => setImage1(e.target.value)}
                                 />
