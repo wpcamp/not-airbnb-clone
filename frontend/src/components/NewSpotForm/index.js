@@ -187,7 +187,7 @@ const NewSpotForm = ({ spot }) => {
                             </div>
                             <hr />
                             <div id='createNewSpotSubmitButtonDiv'>
-                                <button id='createNewSpotSubmitButton' type="submit" disabled={!country || !address || !city || !state || !price || !description || !name || !image1} >Create Spot</button>
+                                <button id={(!country || !address || !city || !state || !price || !description || !name || !image1)? 'createNewSpotSubmitButtonDisabled' : 'createNewSpotSubmitButton'} type="submit" disabled={!country || !address || !city || !state || !price || !description || !name || !image1} >Create Spot</button>
                             </div>
                         </form>
                     </div>
@@ -196,5 +196,6 @@ const NewSpotForm = ({ spot }) => {
         </>
     );
 }
+// 'createNewSpotSubmitButton'
 
 export default NewSpotForm;

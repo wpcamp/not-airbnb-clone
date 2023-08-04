@@ -69,6 +69,7 @@ function CreateReviewModal({ spotId, reviewFunc }) {
                     {errors?.errors?.review && <a>Review must be more than 10 characters</a>}
                     <textarea id="createReviewTextArea" placeholder="Leave your review here..." onChange={(e) => setReviewText(e.target.value)}></textarea>
                 </div>
+                {errors && <a>{errors?.errors || errors?.message}</a>}
                 <div className="createReviewStarsDiv">
                     <div>
                         {errors?.errors?.stars && <a>Must give a star rating</a>}
