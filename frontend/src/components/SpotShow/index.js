@@ -45,8 +45,6 @@ export const SpotShow = () => {
         return window.alert('Feature coming soon!')
     }
 
-    // console.log('spot here: ', spot);
-
     return (
         <>
             <div>
@@ -81,12 +79,20 @@ export const SpotShow = () => {
                     <div className="priceReserveDiv">
                         <div id='priceReviewsDiv'>
                             <a>${spot && spot?.price} per night</a>
-                            {reviews.length > 1
+                            {/* //!! 0 review after delete - need to look into this */}
+                            {/* {reviews.length > 1
                                 ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews</a>
                                 : reviews.length === 1
                                     ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review</a>
                                     : <a><i className="fa-solid fa-star"></i> New</a>
+                            } */}
+                            {reviews.length === 0
+                                ? <a><i className="fa-solid fa-star"></i> New</a>
+                                : reviews.length === 1
+                                    ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review</a>
+                                    : <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews</a>
                             }
+
                         </div>
                         <div className="reserveButtonDiv">
                             <button id='reserveButton' type="submit" onClick={() => reserveClick()}>RESERVE</button>
@@ -105,11 +111,11 @@ export const SpotShow = () => {
                             <div>
                                 <OpenModalButton
                                     buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
                                 />
                             </div>
                             <div>
-                                <a id='postReviewText'>Be the first to post a review</a>
+                                <a id='postReviewText'>Be the first to post a review!</a>
                             </div>
                         </div>)
                         ||
@@ -119,7 +125,7 @@ export const SpotShow = () => {
                                 <OpenModalButton
                                     className='postReviewButton'
                                     buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
+                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
                                 /></div>)
                     }
                     {spot && reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(review => {
@@ -137,7 +143,7 @@ export const SpotShow = () => {
                                         <div id="userReviewDeleteButton">
                                             <OpenModalButton
                                                 buttonText="Delete"
-                                                modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews}/>}
+                                                modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
                                             />
                                         </div>
                                     )}
