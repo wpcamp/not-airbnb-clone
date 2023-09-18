@@ -9,13 +9,6 @@ import OpenModalButton from "../OpenModalButton";
 import { DeleteReviewModal } from "../DeleteModal";
 
 
-
-
-
-
-
-
-
 export const ReviewCard = () => {
 
     const { spotId } = useParams()
@@ -74,8 +67,8 @@ export const ReviewCard = () => {
                     </div>
                     <div className="post-review-card">
                         {((user?.user && spot?.ownerId !== user?.user?.id && (!reviews?.find(review => review?.userId === user?.user?.id)) && reviews.length === 0) && (
-                            <div className='postReviewButton'>
-                                <div>
+                            <div >
+                                <div className='postReviewButton'>
                                     <OpenModalButton
                                         buttonText="Post Your review"
                                         modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews} />}

@@ -12,3 +12,41 @@
     justify-content: space-between;
 
 }
+
+
+.sort-dropdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.sort-dropdown-container label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#sort-dropdown {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.spot-container {
+    list-style: none;
+    padding: 0;
+}
+
+.spot-container li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.spot-container li:hover {
+    background-color: #eaeaea;
+}
