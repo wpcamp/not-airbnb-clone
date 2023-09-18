@@ -7,6 +7,7 @@ import { thunkGetSpot } from "../../store/spots";
 import { CreateReviewModal } from "../CreateReviewModal";
 import OpenModalButton from "../OpenModalButton";
 import { DeleteReviewModal } from "../DeleteModal";
+import { UpdateReviewModal } from '../UpdateReviewModal';
 
 
 export const ReviewCard = () => {
@@ -107,6 +108,9 @@ export const ReviewCard = () => {
                                                     buttonText="Delete"
                                                     modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
                                                 />
+                                                <OpenModalButton
+                                                    buttonText='Edit'
+                                                    modalComponent={<UpdateReviewModal review={review} spotId={spot?.id} reviewFunc={fetchSpotReviews}/>} />
                                             </div>
                                         )}
                                     </div>

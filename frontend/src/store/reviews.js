@@ -4,7 +4,17 @@ import { csrfFetch } from "./csrf";
 
 
 /** Action Type Constants: */
+export const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 export const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW'
+
+
+
+/** Action Creators: */
+
+export const updateReview = (review) => ({  
+    type: UPDATE_REVIEW,
+    review
+})
 
 export const removeReview = (reviewId) => ({
     type: REMOVE_REVIEW,
@@ -13,6 +23,23 @@ export const removeReview = (reviewId) => ({
 
 
 /* Thunk Action Creators: */
+
+export const thunkUpdateReview = (review) => async dispatch => {
+    const res = await csrfFetch(`/api/reviews/${review.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(review), 
+    })
+    if (res.ok) {
+        const updatedReview = await res.json()
+        dispatch(updateReview(updatedReview))
+        return updatedReview
+    } else {
+        const errors = await res.json()
+        return errors
+    }
+}
+
 export const thunkRemoveReview = (reviewId) => async dispatch => {
     const res = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
@@ -34,6 +61,10 @@ const reviewsReducer = (state = {}, action) => {
         case REMOVE_REVIEW:
             newState = {...state}
             delete newState[action.reviewId]
+            return newState
+        case UPDATE_REVIEW:
+            newState = {...state}
+            newState[action.review.id] = action.review
             return newState
         default:
             return state

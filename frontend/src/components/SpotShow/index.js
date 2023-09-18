@@ -85,7 +85,7 @@ export const SpotShow = () => {
                         <div id='hostedByDiv'>
                             Hosted by {spot && spot?.Owner?.firstName} {spot && spot?.Owner?.lastName}
                         </div>
-                        <div>
+                        <div id="descriptDiv">
                             {spot && spot?.description}
                         </div>
                     </div>
