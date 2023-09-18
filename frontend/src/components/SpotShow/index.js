@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { csrfFetch } from "../../store/csrf";
 import { thunkGetSpot } from "../../store/spots";
-import { CreateReviewModal } from "../CreateReviewModal";
-import OpenModalButton from "../OpenModalButton";
-import { DeleteReviewModal } from "../DeleteModal";
+import { ReviewCard } from "../Review";
 import './SpotShow.css'
 
 export const SpotShow = () => {
@@ -114,63 +112,13 @@ export const SpotShow = () => {
                         </div>
                         <div className="reserve-button">
                             <button id="reserve-button" type="submit" onClick={() => reserveClick()}>
-                                RESERVE
+                                Reserve
                             </button>
                         </div>
                     </div>
-                </div>
-                <div>
-                    {(!reviews?.length) && <a><i className="fa-solid fa-star"></i> New </a>}
-                    {(reviews?.length === 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} review</a>}
-                    {(reviews?.length > 1) && <a><i className="fa-solid fa-star"></i> {spot && spot?.avgRating?.toFixed(2)} • {spot && spot?.numReviews} reviews</a>}
-                </div>
-                <div>
-                    {((user?.user && spot?.ownerId !== user?.user?.id && (!reviews?.find(review => review?.userId === user?.user?.id)) && reviews.length === 0)
-                        &&
-                        <div className='postReviewButton'>
-                            <div>
-                                <OpenModalButton
-                                    buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
-                                />
-                            </div>
-                            <div>
-                                <a id='postReviewText'>Be the first to post a review!</a>
-                            </div>
-                        </div>)
-                        ||
-                        ((user?.user && spot?.ownerId !== user?.user?.id && (!reviews?.find(review => review?.userId === user?.user?.id)))
-                            &&
-                            <div className='postReviewButton'>
-                                <OpenModalButton
-                                    className='postReviewButton'
-                                    buttonText="Post Your review"
-                                    modalComponent={<CreateReviewModal spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
-                                /></div>)
-                    }
-                    {spot && reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(review => {
-                        return (
-                            <div key={review?.id}>
-                                <div id='reviewUserName'>
-                                    {spot && review?.User?.firstName}
-                                </div>
-                                <div id='reviewDate'>
-                                    {spot && review?.createdAt?.slice(5, 7)}-{spot && review?.createdAt?.slice(0, 4)}
-                                </div>
-                                <div id='reviewReview'>
-                                    {spot && review?.review}
-                                    {(review?.userId === user?.user?.id) && (
-                                        <div id="userReviewDeleteButton">
-                                            <OpenModalButton
-                                                buttonText="Delete"
-                                                modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        )
-                    })}
+                    <div>
+                        <ReviewCard />
+                    </div>
                 </div>
             </div>
         </>

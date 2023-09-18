@@ -51,7 +51,7 @@
 .inputExc {
     width: 80%;
     background-color: transparent;
-    /* Removed blue background */
+
 }
 
 .createSpotCountry {
@@ -61,15 +61,15 @@
 
 .createSpotCityState {
     display: flex;
-    /* Change to flex layout */
+
     justify-content: space-between;
-    /* Add space between city and state inputs */
+
 }
 
 .createSpotCityInput,
 .createSpotStateInput {
     flex: 1;
-    /* Divide the available width equally */
+
 }
 
 textarea {
@@ -77,14 +77,13 @@ textarea {
     width: 100%;
     resize: none;
     background-color: transparent;
-    /* Removed blue background */
+
 }
 
 hr {
     height: 1px;
     background-color: black;
     width: 100%;
-    /* Adjusted width to 100% */
 }
 
 .new-spot-form .createSpotHeaderTertiaryText {
