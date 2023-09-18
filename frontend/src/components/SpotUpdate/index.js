@@ -31,7 +31,6 @@ const SpotUpdate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newSpot = { id: spotId, country, address, city, state, price, description, name };
-        // console.log('SPOT:', newSpot);
         if (newSpot) {
             setErrors({});
             try {
@@ -142,6 +141,7 @@ const SpotUpdate = () => {
             </div>}
         </>
     );
+    
 };
 
 export default SpotUpdate;

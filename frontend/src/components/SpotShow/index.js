@@ -54,17 +54,32 @@ export const SpotShow = () => {
                 <h4 id='spotLocation'>
                     {spot && spot?.city}, {spot && spot?.state}, {spot && spot?.country}
                 </h4>
-                <div className="spotImages">
-                    <div id="mainSpotImage">
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} width={500} height={500}></img>}
+
+                <div className="grid-container">
+                    <div id="main-image">
+                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[0]?.url} alt="Main Image" className="main-image" />}
                     </div>
-                    <div className="secondColSpotImages">
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[1]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[2]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                    </div>
-                    <div className="thirdColSpotImages">
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[3]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
-                        {spot?.SpotImages && <img src={spot && spot?.SpotImages[4]?.url || spot?.SpotImages[0]?.url} width={250} height={250}></img>}
+                    <div className="secondary-images">
+                        <div className="image" >
+                            {spot?.SpotImages && (
+                                <img src={spot && spot?.SpotImages[1]?.url || spot?.SpotImages[0]?.url} alt="Image 2" className="small-image" />
+                            )}
+                        </div>
+                        <div className="image" id="topRightImg">
+                            {spot?.SpotImages && (
+                                <img src={spot && spot?.SpotImages[2]?.url || spot?.SpotImages[0]?.url} alt="Image 3" className="small-image" />
+                            )}
+                        </div>
+                        <div className="image" >
+                            {spot?.SpotImages && (
+                                <img src={spot && spot?.SpotImages[3]?.url || spot?.SpotImages[0]?.url} alt="Image 4" className="small-image" />
+                            )}
+                        </div>
+                        <div className="image" id="bottomRightImg">
+                            {spot?.SpotImages && (
+                                <img src={spot && spot?.SpotImages[4]?.url || spot?.SpotImages[0]?.url} alt="Image 5" className="small-image" />
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="hostDescriptionReserveDiv">
@@ -76,26 +91,31 @@ export const SpotShow = () => {
                             {spot && spot?.description}
                         </div>
                     </div>
-                    <div className="priceReserveDiv">
-                        <div id='priceReviewsDiv'>
-                            <a>${spot && spot?.price} per night</a>
-                            {/* //!! 0 review after delete - need to look into this */}
-                            {/* {reviews.length > 1
-                                ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews</a>
-                                : reviews.length === 1
-                                    ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review</a>
-                                    : <a><i className="fa-solid fa-star"></i> New</a>
-                            } */}
-                            {reviews.length === 0
-                                ? <a><i className="fa-solid fa-star"></i> New</a>
-                                : reviews.length === 1
-                                    ? <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review</a>
-                                    : <a><i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews</a>
-                            }
-
+                    <div className="price-reserve-container">
+                        <div className="price-reviews">
+                            <div className="price">
+                                <span>${spot && spot?.price} per night</span>
+                            </div>
+                            <div className="reviews">
+                                {reviews.length === 0 ? (
+                                    <span>
+                                        <i className="fa-solid fa-star"></i> New
+                                    </span>
+                                ) : reviews.length === 1 ? (
+                                    <span>
+                                        <i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} review
+                                    </span>
+                                ) : (
+                                    <span>
+                                        <i className="fa-solid fa-star"></i> {spot?.avgRating?.toFixed(2)} • {spot?.numReviews} reviews
+                                    </span>
+                                )}
+                            </div>
                         </div>
-                        <div className="reserveButtonDiv">
-                            <button id='reserveButton' type="submit" onClick={() => reserveClick()}>RESERVE</button>
+                        <div className="reserve-button">
+                            <button id="reserve-button" type="submit" onClick={() => reserveClick()}>
+                                RESERVE
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -156,3 +176,4 @@ export const SpotShow = () => {
         </>
     )
 }
+
