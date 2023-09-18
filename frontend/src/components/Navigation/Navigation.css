@@ -25,14 +25,6 @@
     padding-top: 10px;
 }
 
-#menuButton {
-    position: relative;
-    background-color: transparent;
-    border-radius: 25px;
-    cursor: pointer;
-    
-}
-
 .profile-dropdown {
     position: absolute;
     right: 0;
@@ -102,3 +94,38 @@ li {
     list-style-type: none;
 }
 
+#createSpotLink {
+    text-decoration: none;
+    transition: background-color 0.3s ease; 
+    padding: 5px 5px;
+    border-radius: 15px;
+    color: grey;
+}
+
+#createSpotLink:hover {
+    background-color: lightgrey; 
+}
+
+
+#menuButton {
+    background-color: #007bff; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+#menuButton:hover {
+    background-color: #0056b3; 
+}
+
+#menuButton i {
+    font-size: 20px; 
+}
+
+#rentHomeDiv {
+    margin-top: 4px;
+    font-size: 20px;
+}

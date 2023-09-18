@@ -54,8 +54,7 @@ function ProfileButton({ user }) {
         <>
             <div id="navProfileDiv">
                 <button id='menuButton' onClick={openMenu}>
-                    <i className="fa-solid fa-bars"></i>
-                    <i className="fas fa-user-circle" />
+                <i className="fa-solid fa-user fa-xl"></i>
                 </button>
                 {showMenu && (<ul className={ulClassName} ref={ulRef}>
                     {user ? (

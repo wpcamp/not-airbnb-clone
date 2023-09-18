@@ -82,7 +82,7 @@ const NewSpotForm = ({ spot }) => {
             <div className='createSpotContainer'>
                 <div className='createSpotFormDiv'>
                     <div id='createSpotHeader'>
-                        <a className='createSpotHeaderText'>Create a new Spot</a>
+                        <a className='createSpotHeaderText'>Rent your home</a>
                         <a className='createSpotHeaderSecondaryText'>Where's your place located?</a>
                         <a className='createSpotHeaderTertiaryText'>Guests will only get your exact address once they booked a reservation.</a>
                     </div>

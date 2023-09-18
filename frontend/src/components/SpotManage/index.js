@@ -44,7 +44,7 @@ const SpotManage = () => {
                 Manage Spots
             </div>
             <div>
-                {!filteredSpots.length && <button id='createSpotButton' onClick={createSpotAction}>Create a New Spot</button>}
+                {!filteredSpots.length && <button id='createSpotButton' onClick={createSpotAction}>Rent your home</button>}
             </div>
             <ul className="spotContainer">
                 {filteredSpots.map((spot) => (

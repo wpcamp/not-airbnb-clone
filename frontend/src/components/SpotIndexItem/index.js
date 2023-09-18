@@ -1,4 +1,5 @@
 import {useHistory } from 'react-router-dom'
+import './SpotIndexItem.css'
 
 const SpotIndexItem = ({ spot }) => {
     const history = useHistory()
