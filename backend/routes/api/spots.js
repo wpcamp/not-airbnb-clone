@@ -313,6 +313,7 @@ router.get('/', async (req, res) => {
     if (page < 1) {
         return res.status(400).json({ message: 'Page must be greater than or equal to 1' })
     }
+    //!! THIS IS WHERE THE 20 SPOTS PER PAGE IS SET
     if (isNaN(size)) size = 20
     if (size > 20) {
         return res.status(400).json({ message: 'Size must be less than 20' })
