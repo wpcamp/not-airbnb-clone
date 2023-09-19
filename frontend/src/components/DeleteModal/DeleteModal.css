@@ -36,6 +36,7 @@
     background-color: grey;
     color: white;
     font-weight: bold;
+    border-radius: 15px;
 }
 
 #updateButtonSpot {

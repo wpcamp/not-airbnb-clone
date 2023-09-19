@@ -1,0 +1,96 @@
+/* #updateReviewModal */
+#updateReviewModal {
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* #updateReviewHeader and .updateReviewHeader */
+#updateReviewHeader,
+.updateReviewHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+/* #updateReviewTextArea and .updateReviewTextArea */
+#updateReviewTextArea,
+.updateReviewTextArea {
+    margin: 5px 20px 5px 20px;
+    border: 2px black solid;
+    width: 90%;
+}
+
+/* .updateReviewStarsDiv */
+.updateReviewStarsDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* #disabledButton */
+#disabledButton {
+    width: 390px;
+    height: 40px;
+    box-shadow: 3px 3px grey;
+    background-color: white;
+    color: grey;
+    cursor: not-allowed;
+}
+
+/* #notDisabledButton */
+#notDisabledButton {
+    width: 390px;
+    height: 40px;
+    box-shadow: 3px 3px black;
+    background-color: rgb(255, 90, 95);
+    color: white;
+}
+
+/* .rev-star */
+.rev-star {
+    font-size: 25px;
+    color: black;
+    cursor: pointer;
+}
+
+/* .rev-star.fa-solid */
+.rev-star.fa-solid {
+    color: black;
+}
+
+/* #error-message */
+#error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* #starsText */
+#starsText {
+    padding-left: 7px;
+}
+
+/* #updateReviewButton */
+#updateReviewButton {
+    margin-bottom: 10px;
+}
+
+#modalButton-logsign {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 1px 5px;
+    border: 1px solid black;
+    box-shadow: 1px 0.5px black;
+    margin-left: 5px;
+    font-size: 14px;
+
+}

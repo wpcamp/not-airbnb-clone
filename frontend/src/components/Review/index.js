@@ -103,13 +103,13 @@ export const ReviewCard = () => {
                                     <div id='reviewReview'>
                                         {spot && review?.review}
                                         {(review?.userId === user?.user?.id) && (
-                                            <div id="userReviewDeleteButton">
+                                            <div id="userReviewButton">
                                                 <OpenModalButton
                                                     buttonText="Delete"
                                                     modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spot?.id} reviewFunc={fetchSpotReviews} />}
                                                 />
                                                 <OpenModalButton
-                                                    buttonText='Edit'
+                                                    buttonText=' Edit '
                                                     modalComponent={<UpdateReviewModal review={review} spotId={spot?.id} reviewFunc={fetchSpotReviews}/>} />
                                             </div>
                                         )}
