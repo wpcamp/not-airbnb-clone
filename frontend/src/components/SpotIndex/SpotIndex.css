@@ -50,3 +50,35 @@
 .spot-container li:hover {
     background-color: #eaeaea;
 }
+
+/* Styling for the container */
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    gap: 20px;
+}
+
+
+.pagination-buttons button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+
+.pagination-buttons button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+.pagination-buttons button:hover:not([disabled]) {
+    background-color: #0056b3;
+}

@@ -49,6 +49,7 @@ export const SpotShow = () => {
                 <h1 id='spotTitle'>
                     {spot && spot?.name}
                 </h1>
+                <h4>{spot && spot?.address}</h4>
                 <h4 id='spotLocation'>
                     {spot && spot?.city}, {spot && spot?.state}, {spot && spot?.country}
                 </h4>
