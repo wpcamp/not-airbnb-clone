@@ -5,10 +5,11 @@ import SpotIndexItem from "../SpotIndexItem";
 import './SpotIndex.css'
 
 const SpotIndex = () => {
+    const dispatch = useDispatch()
     const [sortOption, setSortOption] = useState('price_asc');
     const [page, setPage] = useState(1);
     const spots = Object.values(useSelector((state) => (state.spots ? state.spots : [])))
-    const dispatch = useDispatch()
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const handleNextPage = () => {
         setPage(page + 1);
@@ -22,7 +23,7 @@ const SpotIndex = () => {
 
 
     useEffect(() => {
-        dispatch(thunkGetSpots(page))
+        dispatch(thunkGetSpots(page)).then(setIsLoaded(true))
     }, [dispatch, page])
 
     const handleSortChange = (option) => {
@@ -45,36 +46,42 @@ const SpotIndex = () => {
     }
 
     return (
-        <>
-            <div className="sort-dropdown-container">
-                <label htmlFor="sort-dropdown">Sort by:</label>
-                <select
-                    id="sort-dropdown"
-                    onChange={(e) => handleSortChange(e.target.value)}
-                    value={sortOption}
-                >
-                    <option value="price_asc">Price (Low to High)</option>
-                    <option value="price_desc">Price (High to Low)</option>
-                    <option value="rating_asc">Average Rating (Low to High)</option>
-                    <option value="rating_desc">Average Rating (High to Low)</option>
-                </select>
-            </div>
-            <ul className="spotContainer">
-                {sortSpots().map((spot) => (
-                    <SpotIndexItem
-                        spot={spot}
-                        key={spot.id} />
-                ))}
-            </ul>
-            <div className="pagination-buttons">
-                <button onClick={handleLastPage} disabled={page === 1}>
-                    Previous
-                </button>
-                <button onClick={handleNextPage} disabled={page === 2}>
-                    Next
-                </button>
-            </div>
-        </>
+        isLoaded ?
+            (<>
+                <div className="sort-dropdown-container">
+                    <label htmlFor="sort-dropdown">Sort by:</label>
+                    <select
+                        id="sort-dropdown"
+                        onChange={(e) => handleSortChange(e.target.value)}
+                        value={sortOption}
+                    >
+                        <option value="price_asc">Price (Low to High)</option>
+                        <option value="price_desc">Price (High to Low)</option>
+                        <option value="rating_asc">Average Rating (Low to High)</option>
+                        <option value="rating_desc">Average Rating (High to Low)</option>
+                    </select>
+                </div>
+                <ul className="spotContainer">
+                    {sortSpots().map((spot) => (
+                        <SpotIndexItem
+                            spot={spot}
+                            key={spot.id} />
+                    ))}
+                </ul>
+                <div className="pagination-buttons">
+                    <button onClick={handleLastPage} disabled={page === 1}>
+                        Previous
+                    </button>
+                    <button onClick={handleNextPage} disabled={page === 2}>
+                        Next
+                    </button>
+                </div>
+            </>
+            ) : (
+                <>
+                    <h1>Loading...</h1>
+                </>
+            )
     )
 }
 

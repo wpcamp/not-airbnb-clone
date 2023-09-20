@@ -8,6 +8,7 @@ import { CreateReviewModal } from "../CreateReviewModal";
 import OpenModalButton from "../OpenModalButton";
 import { DeleteReviewModal } from "../DeleteModal";
 import { UpdateReviewModal } from '../UpdateReviewModal';
+import MapContainer from '../Maps';
 
 
 export const ReviewCard = () => {
@@ -15,6 +16,7 @@ export const ReviewCard = () => {
     const { spotId } = useParams()
     const dispatch = useDispatch()
     const spot = useSelector((state) => state.spots[spotId])
+    const allReviews = useSelector((state) => state.reviews)   
     const [reviews, setReviews] = useState([])
     const [user, setUser] = useState(null)
 

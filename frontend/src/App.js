@@ -9,6 +9,7 @@ import { SpotShow } from "./components/SpotShow";
 import SpotUpdate from "./components/SpotUpdate";
 import NewSpotForm from "./components/NewSpotForm";
 import SpotManage from "./components/SpotManage";
+import Maps from "./components/Maps/Maps";
 
 function App() {
   const dispatch = useDispatch();

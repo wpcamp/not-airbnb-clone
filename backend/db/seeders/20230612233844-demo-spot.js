@@ -15,7 +15,7 @@ module.exports = {
             state: 'New Hampshire',
             country: 'United States of America',
             lat: 43.7022,
-            lng: 72.2896,
+            lng: -72.2896,
             name: 'Alumni Gym Apartments',
             description: 'Welcome to The Dartmouth Alumni Gym Apartments, where history meets modern luxury. Once a bustling college gym, this exclusive residence now offers elegantly designed apartments with state-of-the-art amenities. Embrace the charm of exposed brick walls and high ceilings, while enjoying the convenience of a fully equipped fitness center and rooftop pool.',
             price: 450.00
@@ -26,7 +26,7 @@ module.exports = {
             state: 'Vermont',
             country: 'United States of America',
             lat: 43.7153,
-            lng: 72.3079,
+            lng: -72.3079,
             name: 'Carpenter and Main',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             price: 175.00
@@ -37,7 +37,7 @@ module.exports = {
             state: 'Texas',
             country: 'United States of America',
             lat: 30.2672,
-            lng: 97.7431,
+            lng: -97.7431,
             name: 'Buckingham Palace Inspired Castle',
             description: 'Experience the epitome of British grandeur in the heart of Texas. Immerse yourself in opulent State Rooms, breathtaking gardens, and historic charm. A unique opportunity to live like royalty, surrounded by centuries of majestic history and iconic landmarks.',
             price: 4500.00
@@ -48,7 +48,7 @@ module.exports = {
             state: 'Maine',
             country: 'United States of America',
             lat: 43.6591,
-            lng: 70.2568,
+            lng: -70.2568,
             name: 'Oceanview Luxury Apartment',
             description: 'Great apartment with all utilities included. Brand-new kitchen, two bedroom, and small yard with grill. Greate neighborhood, with a fire station nearby in case of any accidents!',
             price: 299.99
@@ -59,7 +59,7 @@ module.exports = {
             state: 'Maine',
             country: 'United States of America',
             lat: 44.5520,
-            lng: 69.6317,
+            lng: -69.6317,
             name: 'Winter',
             description: 'Beautifully run-down 5 bedroom house with a one car garage in the heart of Waterville, Maine. This old mill dormitory has seen little renovation since it was built in the mid-to-late 1800s. Mouse infestation, no hot water, and decades-old applicances. Completely unfinished basement.',
             price: 100.00
