@@ -17,7 +17,9 @@ function Navigation({ isLoaded }) {
                 </li>
                 <div id='navBarRightComp'>
                     {sessionUser && <li>
-                        <NavLink to='/spots/new' id='createSpotLink'>Create a New Spot</NavLink>
+                        <div id='rentHomeDiv'>
+                            <NavLink to='/spots/new' id='createSpotLink'>Rent your home</NavLink>
+                        </div>
                     </li>}
                     {isLoaded && (
                         <li>

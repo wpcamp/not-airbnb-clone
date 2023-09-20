@@ -1,20 +1,69 @@
-.createSpotContainer {
+.new-spot-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
 }
 
-.createSpotFormDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 400px;
+.new-spot-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    width: 750px;
+    margin: 0 auto;
+    max-height: 900px;
+    overflow-y: auto;
+    padding-top: 20px;
 }
 
-input:not(.inputExc) {
-    width: 90%;
+
+.new-spot-form::-webkit-scrollbar {
+    width: 12px;
+}
+
+
+.new-spot-form::-webkit-scrollbar-track {
+    background-color: #f1f1f1; 
+}
+
+
+.new-spot-form::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 6px; 
+}
+
+.new-spot-form::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-header-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.form-header-subtext {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.new-spot-form input {
+    width: 96%;
+    padding: 10px;
     margin-bottom: 10px;
-    background-color: rgba(130, 199, 245, 0.46);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: transparent;
+    margin-right: 10px;
 }
 
 #moneySign {
@@ -24,50 +73,54 @@ input:not(.inputExc) {
 
 .inputExc {
     width: 80%;
-    background-color: rgba(130, 199, 245, 0.46);
+    background-color: transparent;
+
 }
 
-#createSpotHeader {
+.createSpotCountry {
     display: flex;
     flex-direction: column;
 }
 
-#createSpotPrice {
+.createSpotCityState {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
+
+    justify-content: space-between;
+
 }
 
-.createSpotHeaderText {
-    font-size: 20px;
-    padding-bottom: 10px;
-}
+.createSpotCityInput,
+.createSpotStateInput {
+    flex: 1;
 
-#createSpotCountry {
-    display: flex;
-    flex-direction: column;
-}
-
-#createSpotCityState {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 
 textarea {
     height: 100px;
-    width: 380px;
+    width: 100%;
     resize: none;
-    background-color: rgba(130, 199, 245, 0.46);
+    background-color: transparent;
+
+}
+
+#createSpotPrice {
+    display: flex ;
+    flex-direction: row;
+}
+
+#moneySign {
+    padding-top: 10px;
+    padding-right: 5px;
+    font-size: 17px;
 }
 
 hr {
     height: 1px;
     background-color: black;
-    width: 400px;
+    width: 100%;
 }
 
-.createSpotHeaderTertiaryText {
+.new-spot-form .createSpotHeaderTertiaryText {
     font-size: 12px;
     padding-bottom: 10px;
     display: flex;
@@ -86,45 +139,46 @@ input::placeholder {
 }
 
 #createNewSpotSubmitButton {
-    margin-top: 5px;
-    margin-bottom: 15px;
-    height: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 40px;
     color: white;
-    box-shadow: 1px 1px 0px black;
     background-color: rgb(255, 90, 95);
-    width: 100px;
+    width: 150px;
+    border-radius: 20px;
+    font-size: 20px;
 }
 
 #createNewSpotSubmitButtonDisabled {
-    margin-top: 5px;
-    margin-bottom: 15px;
-    height: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 40px;
     color: white;
     box-shadow: 1px 1px 0px black;
     background-color: grey;
-    width: 100px;
+    width: 150px;
+    border-radius: 20px;
+    font-size: 20px;
 }
 
 .newSpotError {
     color: red;
     display: flex;
-    align-items: center; 
-    flex-direction: row; 
+    align-items: center;
+    flex-direction: row;
     margin-bottom: -10px;
     margin-top: -12px;
     gap: 10px;
 }
 
-.createSpotFormDiv .newSpotErrorNormal {
+.new-spot-form .newSpotErrorNormal {
     color: black;
     margin-top: 0px;
     margin-bottom: 0px;
-
 }
 
-.createSpotFormDiv .newSpotErrorNotNormal {
+.new-spot-form .newSpotErrorNotNormal {
     color: black;
-
 }
 
 #descripErr {
@@ -137,4 +191,42 @@ input::placeholder {
     display: flex;
     padding-top: 0px;
     flex-direction: row;
+}
+
+
+#cityInput {
+    width: 300px;
+}
+
+#stateInputDiv {
+    margin-right: 100px;
+    padding-right: 5px;
+}
+
+#stateInput {
+    width: 300px;
+}
+
+
+#textAreaCreate {
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    padding-left: 10px;
+    padding-top: 2px;
+}
+
+.createSpotHeaderTertiaryText select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.createSpotHeaderTertiaryText label {
+    display: block;
+    margin-bottom: 10px;
 }

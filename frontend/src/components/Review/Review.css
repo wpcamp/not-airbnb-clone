@@ -1,0 +1,67 @@
+.all-reviews-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.review-card {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.review-card:last-child {
+    border-bottom: none;
+}
+
+
+.review-card #reviewUserName {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.review-card #reviewDate {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.review-card #reviewReview {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.review-card #userReviewButton {
+    margin-top: 10px;
+}
+
+#wholeReviewsCardDiv {
+    width: 90%;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 10px;
+    overflow-y: auto;
+    max-height: 650px;
+}
+
+.postReviewButton button {
+    background-color: #ff5a5f !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    padding: 10px 20px !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.postReviewButton button:hover {
+    background-color: #e50006 !important;
+}

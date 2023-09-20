@@ -1,4 +1,5 @@
-#createReviewModal {
+/* #updateReviewModal */
+#updateReviewModal {
     border: 3px solid black;
     border-radius: 10px;
     padding: 20px;
@@ -7,7 +8,9 @@
     margin: 0 auto;
 }
 
-#createReviewHeader {
+/* #updateReviewHeader and .updateReviewHeader */
+#updateReviewHeader,
+.updateReviewHeader {
     display: flex;
     justify-content: center;
     font-size: 25px;
@@ -15,21 +18,23 @@
     margin-bottom: 7px;
 }
 
-#createReviewTextArea{
+/* #updateReviewTextArea and .updateReviewTextArea */
+#updateReviewTextArea,
+.updateReviewTextArea {
     margin: 5px 20px 5px 20px;
     border: 2px black solid;
     width: 90%;
 }
 
-.createReviewStarsDiv {
+/* .updateReviewStarsDiv */
+.updateReviewStarsDiv {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
     margin-bottom: 25px;
 }
 
-
+/* #disabledButton */
 #disabledButton {
     width: 390px;
     height: 40px;
@@ -37,59 +42,55 @@
     background-color: white;
     color: grey;
     cursor: not-allowed;
-
 }
+
+/* #notDisabledButton */
 #notDisabledButton {
     width: 390px;
     height: 40px;
     box-shadow: 3px 3px black;
     background-color: rgb(255, 90, 95);
     color: white;
-} 
+}
 
-  .createReviewHeader {
-    font-size: 25px;
-    margin-top: 10px;
-    margin-bottom: 7px;
-  }
-  
-  .createReviewTextArea {
-    margin: 5px 0;
-    padding: 10px;
-    border: 2px solid black;
-    width: 100%;
-  }
-  
-  .createReviewStarsDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 25px;
-  }
-  
-  .rev-star {
+/* .rev-star */
+.rev-star {
     font-size: 25px;
     color: black;
     cursor: pointer;
-  }
-  
-  .rev-star.fa-solid {
+}
+
+/* .rev-star.fa-solid */
+.rev-star.fa-solid {
     color: black;
-  }
-  
-  #error-message {
+}
+
+/* #error-message */
+#error-message {
     color: red;
     font-size: 14px;
     margin-top: 5px;
-  }
-  
-  #starsText {
+}
+
+/* #starsText */
+#starsText {
     padding-left: 7px;
-  }
-  
-  #createReviewButton {
+}
+
+/* #updateReviewButton */
+#updateReviewButton {
     margin-bottom: 10px;
-  }
-  
- 
-  
+}
+
+#modalButton-logsign {
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 1px 5px;
+    border: 1px solid black;
+    box-shadow: 1px 0.5px black;
+    margin-left: 5px;
+    font-size: 14px;
+
+}

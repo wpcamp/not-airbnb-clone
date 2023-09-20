@@ -26,7 +26,7 @@ function ProfileButton({ user }) {
         if (!showMenu) return;
 
         const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
                 setShowMenu(false);
             }
         };
@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.logout())
-        // logoutCloseMenu()
+        logoutCloseMenu()
         history.push('/')
     };
 
@@ -54,8 +54,7 @@ function ProfileButton({ user }) {
         <>
             <div id="navProfileDiv">
                 <button id='menuButton' onClick={openMenu}>
-                    <i className="fa-solid fa-bars"></i>
-                    <i className="fas fa-user-circle" />
+                <i className="fa-solid fa-user fa-xl"></i>
                 </button>
                 {showMenu && (<ul className={ulClassName} ref={ulRef}>
                     {user ? (
@@ -63,7 +62,7 @@ function ProfileButton({ user }) {
                             <div className='modalButton-loggedin'>
                                 <li id="loggedInHello">Hello, {user.firstName}</li>
                                 <li id="loggedInEmail">{user.email}</li>
-                                <li id='loggedInManage'><NavLink to='/spots/current'>Manage Spots</NavLink></li>
+                                <li id='loggedInManage'><NavLink to='/spots/current' onClick={() => setShowMenu(false)}>Manage Spots</NavLink></li>
                                 <li>
                                     <button id='logoutButton' onClick={logout}>Log Out</button>
                                 </li>

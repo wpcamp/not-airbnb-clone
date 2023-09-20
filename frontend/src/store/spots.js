@@ -57,8 +57,8 @@ export const removeSpot = (spotId) => ({
 
 /* Thunk Action Creators: */
 
-export const thunkGetSpots = () => async dispatch => {
-    const res = await csrfFetch('/api/spots/', {
+export const thunkGetSpots = (page) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/?page=${page}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
