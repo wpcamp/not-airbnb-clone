@@ -20,8 +20,8 @@ const Maps = ({ apiKey }) => {
     });
 
     const defaultCenter = {
-        lat: 0,
-        lng: 0,
+        lat: 51.5072,
+        lng: 0.1276,
     };
 
     const center = spot
