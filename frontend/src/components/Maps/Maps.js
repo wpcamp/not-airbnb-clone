@@ -63,7 +63,7 @@ const Maps = ({ apiKey }) => {
                             >
                                 <Marker
                                     key={spot.id}
-                                    position={{ lat: spot.lat, lng: spot.lng }}
+                                    position={{ lat: parseFloat(spot.lat), lng: parseFloat(spot.lng) }}
                                     title={spot.name}
                                     animation={window.google.maps.Animation.DROP}
                                 />
