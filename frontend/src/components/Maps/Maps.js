@@ -25,7 +25,7 @@ const Maps = ({ apiKey }) => {
     };
 
     const center = spot
-        ? { lat: spot.lat, lng: spot.lng }
+        ? { lat: parseFloat(spot.lat), lng: parseFloat(spot.lng) }
         : defaultCenter;
 
     const mapOptions = {
